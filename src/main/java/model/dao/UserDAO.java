@@ -17,9 +17,14 @@ public class UserDAO {
 
 
     public int createUser(User user) throws SQLException {
-        String sql = "INSERT INTO USERINFO (userId, password, username, phone, email) VALUES (?, ?, ?, ?, ?)";
-        Object[] param = new Object[] {
-                user.getUserId(), user.getPassword(), user.getUsername(), user.getPhone(), user.getEmail()};
+        String sql = "INSERT INTO USERS (user_id, password, username, phone, email) VALUES (?, ?, ?, ?, ?)";
+        Object[] param = new Object[]{
+            user.getUserId(), 
+            user.getPassword(), 
+            user.getUsername(), 
+            user.getPhone(), 
+            user.getEmail()
+        };
         jdbcUtil.setSqlAndParameters(sql, param);
         
         try {               
@@ -36,7 +41,7 @@ public class UserDAO {
     }
     
     public int updateUser(User user) throws SQLException {
-        String sql = "UPDATE USERINFO SET password = ?, username = ?, phone = ?, email = ? WHERE userId = ?";
+        String sql = "UPDATE USERS SET password = ?, username = ?, phone = ?, email = ? WHERE user_id = ?";
         Object[] param = new Object[] {
                 user.getPassword(), user.getUsername(), user.getPhone(), user.getEmail(), user.getUserId()};
         jdbcUtil.setSqlAndParameters(sql, param);
@@ -56,7 +61,7 @@ public class UserDAO {
     }
     
     public int deleteUser(String userId) throws SQLException {
-        String sql = "DELETE FROM USERINFO WHERE userId=?";
+        String sql = "DELETE FROM USERS WHERE user_id=?";
         jdbcUtil.setSqlAndParameters(sql, new Object[] {userId});
         
         try {               
@@ -74,17 +79,16 @@ public class UserDAO {
     }
     
     public User findUserById(String userId) throws SQLException {
-        String sql = "SELECT password, username, phone, email FROM USERINFO WHERE userId=?";
+        String sql = "SELECT password, username, phone, email FROM USERS WHERE user_id=?";
         jdbcUtil.setSqlAndParameters(sql, new Object[] {userId});
             
         try {
             ResultSet rs = jdbcUtil.executeQuery();
             if (rs.next()) {
                 User user = new User(
-                        rs.getLong("id"),
                         userId,
                         rs.getString("password"),
-                        rs.getString("email"),
+                        rs.getString("username"),
                         rs.getString("email"),
                         rs.getString("phone"));
                 return user;
@@ -98,8 +102,8 @@ public class UserDAO {
     }
     
     public List<User> findAllUser() throws SQLException {
-        String sql = "SELECT userId, password, username, email, phone " 
-                   + "FROM USERINFO "
+        String sql = "SELECT user_id, password, username, email, phone " 
+                   + "FROM USERS "
                    + "ORDER BY id";
         jdbcUtil.setSqlAndParameters(sql, null);
                     
@@ -108,8 +112,7 @@ public class UserDAO {
             List<User> userList = new ArrayList<User>();
             while (rs.next()) {
                 User user = new User(
-                    rs.getLong("id"),
-                    rs.getString("userId"),
+                    rs.getString("user_id"),
                     rs.getString("password"),
                     rs.getString("name"),
                     rs.getString("email"),
@@ -127,14 +130,13 @@ public class UserDAO {
     }
     
     public User loginUser(String userId, String password) throws SQLException {
-        String sql = "SELECT id, username, phone, email FROM USERINFO WHERE userId=? AND password=?";
+        String sql = "SELECT id, username, phone, email FROM USERS WHERE user_id=? AND password=?";
         jdbcUtil.setSqlAndParameters(sql, new Object[] {userId, password});
 
         try {
             ResultSet rs = jdbcUtil.executeQuery();
             if (rs.next()) {
                 return new User(
-                        rs.getLong("id"),
                         userId,
                         password,
                         rs.getString("username"),
@@ -152,7 +154,7 @@ public class UserDAO {
     
     
     public boolean existingUser(String userId) throws SQLException {
-        String sql = "SELECT count(*) FROM USERINFO WHERE userId=?";      
+        String sql = "SELECT count(*) FROM USERS WHERE user_id=?";      
         jdbcUtil.setSqlAndParameters(sql, new Object[] {userId});
 
         try {

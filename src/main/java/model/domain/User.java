@@ -9,8 +9,9 @@ public class User {
     private String email;
     private String phone;
 
-    public User(Long id, String userId, String password, String username, String email, String phone) {
-        this.id = id;
+    public User() { }       // 기본 생성자
+    
+    public User(String userId, String password, String username, String email, String phone) {
         this.userId = userId;
         this.password = password;
         this.username = username;
