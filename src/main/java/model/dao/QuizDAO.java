@@ -61,7 +61,7 @@ public class QuizDAO {
                     rs.getInt("submitNumber"),
                     rs.getString("submitYN"),
                     rs.getString("question_id"),
-                    new User(null, rs.getString("user_id"), null, null, null, sql)
+                    new User(rs.getString("user_id"), null, null, null, sql)
                 );
             }
         } catch (SQLException e) {
@@ -90,7 +90,7 @@ public class QuizDAO {
                     rs.getInt("submitNumber"),
                     rs.getString("submitYN"),
                     rs.getString("question_id"),
-                    new User(null, rs.getString("user_id"), null, null, null, sql)
+                    new User(rs.getString("user_id"), null, null, null, sql)
                 );
                 quizList.add(quiz);
             }
