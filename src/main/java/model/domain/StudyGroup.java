@@ -16,7 +16,7 @@ public class StudyGroup {
     private List<GroupMember> members;
     private List<Schedule> schedules;
     private List<Assignment> assignments;
-    private List<Announcement> announcements;
+    private List<Notice> Notices;
 
     public StudyGroup() { }
     
@@ -171,12 +171,12 @@ public class StudyGroup {
         this.assignments = assignments;
     }
 
-    public List<Announcement> getAnnouncements() {
-        return announcements;
+    public List<Notice> getAnnouncements() {
+        return Notices;
     }
 
-    public void setAnnouncements(List<Announcement> announcements) {
-        this.announcements = announcements;
+    public void setAnnouncements(List<Notice> announcements) {
+        this.Notices = announcements;
     }
 
     
