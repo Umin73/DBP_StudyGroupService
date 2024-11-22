@@ -28,4 +28,31 @@ public class UserManager {
         }
         return userDao.createUser(user);
     }
+    
+    public User findUser(String userId) throws SQLException, UserNotFoundException{
+        User user = userDao.findUser(userId);
+        
+        if(user == null) {
+            throw new UserNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
+        }
+        
+        return user;
+    }
+    
+    public boolean login(String userId, String password) 
+            throws SQLException, UserNotFoundException, PasswordMismatchException{
+        User user = findUser(userId);
+
+        if (user == null) {
+            throw new UserNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
+        }
+
+        if (!user.matchPassword(password)) {
+            throw new PasswordMismatchException("비밀번호가 일치하지 않습니다.");
+        }
+
+        System.out.println("로그인 성공: " + userId);
+        
+        return true;
+    }
 }

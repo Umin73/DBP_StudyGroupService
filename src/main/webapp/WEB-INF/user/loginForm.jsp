@@ -2,6 +2,25 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
+	function login(event) {
+		const form = document.querySelector("form");
+		
+		if(form.userId.value.trim() == "") {
+			alert("아이디를 입력해주세요.");
+			form.userId.focus();
+			event.preventDefault();
+			return false;
+		}
+		
+		if(form.password.value.trim() == "") {
+			alert("비밀번호를 입력해주세요.");
+			form.password.focus();
+			event.preventDefault();
+			return false;
+		}
+		form.submit();
+	}
+
 	function navigateToSignUp(targetUri) {
 		const form = document.createElement("form");
 		form.action = targetUri;
@@ -24,7 +43,7 @@
 	<div class="main-content">
 		<div class="login-titleWrap">로그인</div>
         <div class="contentWrap">
-        	<form>
+        	<form method="POST" action="<c:url value='/user/login' />">
         	<div class="inputWrap">
         		<input type="text" class="input" name="userId" placeholder="아이디" required />
         	</div>
@@ -32,7 +51,7 @@
         		<input type="password" class="input" name="password" placeholder="비밀번호" required />
         	</div>
         	<div>
-        		<input type="submit" class="loginButton" value="로그인" />
+        		<input type="submit" class="loginButton" value="로그인" onClick="login(event)" />
         	</div>
         	</form>
         </div>

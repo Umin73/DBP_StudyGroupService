@@ -17,7 +17,7 @@ public class UserDAO {
 
 
     public int createUser(User user) throws SQLException {
-        String sql = "INSERT INTO USERS (user_id, password, username, phone, email) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?, ?)";
         Object[] param = new Object[]{
             user.getUserId(), 
             user.getPassword(), 
@@ -78,28 +78,34 @@ public class UserDAO {
         return 0;
     }
     
-    public User findUserById(String userId) throws SQLException {
-        String sql = "SELECT password, username, phone, email FROM USERS WHERE user_id=?";
-        jdbcUtil.setSqlAndParameters(sql, new Object[] {userId});
-            
+    public User findUser(String userId) throws SQLException {
+        String sql = "SELECT password, username, email, phone FROM USERS WHERE user_id = ?";
+        System.out.println("Executing SQL: " + sql + " with userId=[" + userId.trim() + "]");
+        
+        jdbcUtil.setSqlAndParameters(sql, new Object[]{userId});
+
         try {
             ResultSet rs = jdbcUtil.executeQuery();
             if (rs.next()) {
-                User user = new User(
+                System.out.println("User found: " + userId);
+                return new User(
                         userId,
                         rs.getString("password"),
                         rs.getString("username"),
                         rs.getString("email"),
-                        rs.getString("phone"));
-                return user;
+                        rs.getString("phone")
+                );
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             jdbcUtil.close();
         }
+        System.out.println("User not found: " + userId);
         return null;
     }
+
+
     
     public List<User> findAllUser() throws SQLException {
         String sql = "SELECT user_id, password, username, email, phone " 

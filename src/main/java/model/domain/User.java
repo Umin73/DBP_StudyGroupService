@@ -59,22 +59,18 @@ public class User {
         this.phone = phone;
     }
 
+    public boolean matchPassword(String password) {
+        if(password == null) return false;
+        return this.password.equals(password);
+    }
+    
+    public boolean isSameUser(String userId) {
+        return this.userId.equals(userId);
+    }
+    
     @Override
     public String toString() {
         return "User ["+"id=" + id + ", userId=" + userId + ", password=" + password + ", username=" + username + ", email=" + email + ", phone="
                 + phone + "]";
-    }
-    
-    
-    public void register() {
-        
-    }
-    
-    public void viewProfile() {
-        
-    }
-    
-    public void updateProfile() {
-        
     }
 }
