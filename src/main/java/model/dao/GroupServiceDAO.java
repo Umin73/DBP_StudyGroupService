@@ -9,7 +9,7 @@ import model.domain.Assignment;
 import model.domain.Notice;
 
 /*
- * 스터디그룹내의 공지사항, 과제 보기, 추가, 수정, 삭제 수행하는 DAO클래스 
+ * 스터디그룹내의 공지사항, 과제 보기, 추가, 수정, 삭제 수행하는 DAO클래스
  **/
 
 public class GroupServiceDAO {
