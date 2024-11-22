@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.user.LoginController;
+import controller.user.LogoutController;
 import controller.user.SignUpController;
 
 public class RequestMapping {
@@ -18,11 +19,13 @@ public class RequestMapping {
     public void initMapping() {
     	// 각 uri에 대응되는 controller 객체를 생성 및 저장
         mappings.put("/", new ForwardController("/index.jsp"));
-        mappings.put("/home", new ForwardController("/home.jsp"));
+        /* mappings.put("/home", new ForwardController("/home.jsp")); */
         mappings.put("/header", new ForwardController("/Header.jsp"));
         mappings.put("/user/login/form", new ForwardController("/user/loginForm.jsp"));
        
+        mappings.put("/home", new HomeController());
         mappings.put("/user/login", new LoginController()); 
+        mappings.put("/user/logout", new LogoutController());
         mappings.put("/user/signup", new SignUpController());
     }
 

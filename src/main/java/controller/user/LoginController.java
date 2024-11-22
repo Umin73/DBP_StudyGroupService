@@ -21,15 +21,13 @@ public class LoginController implements Controller{
             
             HttpSession session = request.getSession();
             session.setAttribute(UserSessionUtils.USER_SESSION_KEY, userId);
-            
-            System.out.println("로그인 성공");
-            
+
             return "redirect:/home";
         } catch (Exception e) {
-            System.out.println("로그인 실패: " + e.getMessage());
             e.printStackTrace();
             request.setAttribute("loginFailed", true);
             request.setAttribute("exception", e);
+            
             return "/user/loginForm.jsp";
         }
     }
