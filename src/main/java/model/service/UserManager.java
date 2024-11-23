@@ -51,8 +51,18 @@ public class UserManager {
             throw new PasswordMismatchException("비밀번호가 일치하지 않습니다.");
         }
 
-        System.out.println("로그인 성공: " + userId);
-        
         return true;
+    }
+    
+    public String findUserId(String username, String phone) throws SQLException {
+        String userId = userDao.findUserId(username, phone);
+        
+        System.out.println("아이디는 " + userId);
+        
+        if(userId == null) {
+            throw new SQLException("사용자를 찾을 수 없습니다.");
+        }
+        
+        return userId;
     }
 }

@@ -21,7 +21,7 @@
 		form.submit();
 	}
 
-	function navigateToSignUp(targetUri) {
+	function navigateToPage(targetUri) {
 		const form = document.createElement("form");
 		form.action = targetUri;
 		form.method = "GET";
@@ -57,13 +57,13 @@
         </div>
         <div class="signUpAndFindWrap">
         	<div class="sButtonWrap">
-        		<button class="sButton">아이디 찾기</button>
+        		<button class="sButton" onClick="navigateToPage('<c:url value='/user/findId' />')">아이디 찾기</button>
         	</div>
         	<div class="sButtonWrap">
-        		<button class="sButton">비밀번호 찾기</button>
+        		<button class="sButton" onClick="navigateToPage('<c:url value='/user/findPw' />')">비밀번호 찾기</button>
         	</div>
         	<div class="sButtonWrap">
-        		<button class="sButton" onClick="navigateToSignUp('<c:url value='/user/signup' />')">회원가입</button>
+        		<button class="sButton" onClick="navigateToPage('<c:url value='/user/signup' />')">회원가입</button>
         	</div>
         </div>
 	</div>
