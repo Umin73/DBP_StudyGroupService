@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import controller.group.CreateGroupController;
 import controller.user.SignUpController;
 
 public class RequestMapping {
@@ -20,6 +21,9 @@ public class RequestMapping {
         mappings.put("/home", new ForwardController("/home.jsp"));
         mappings.put("/header", new ForwardController("/Header.jsp"));
         mappings.put("/user/login/form", new ForwardController("/user/loginForm.jsp"));
+        
+        mappings.put("/group/create/form", new ForwardController("/study/createGroup.jsp"));
+        mappings.put("/group/create", new ForwardController("/study/viewGroup.jsp"));
         
         mappings.put("/user/signup", new SignUpController());
     }
