@@ -47,7 +47,7 @@
 			return false;
 		}
 
-		const phoneExp = /^\d{2,3}-\d{3,4}-\d{4}$/;
+		const phoneExp = /^\d{2,3}\d{3,4}\d{4}$/;
 		if (!phoneExp.test(form.phone.value)) {
 			alert("전화번호 형식이 올바르지 않습니다.");
 			form.phone.focus();
@@ -94,14 +94,14 @@
 					<input type="text" class="input" name="username" required />
 				</div>
 				
-				<div class="inputTitle">전화번호</div>
-				<div class="inputWrap">
-					<input type="text" class="input" name="phone" required />
-				</div>
-				
 				<div class="inputTitle">이메일</div>
 				<div class="inputWrap">
 					<input type="text" class="input" name="email" required />
+				</div>
+				
+				<div class="inputTitle">전화번호('-'를 제외)</div>
+				<div class="inputWrap">
+					<input type="text" class="input" name="phone" required />
 				</div>
 				
 				<div>

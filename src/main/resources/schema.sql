@@ -8,14 +8,5 @@ CREATE TABLE USERS (
     PHONE      VARCHAR2(15 BYTE)
 );
 
-INSERT INTO USERS (USER_ID, PASSWORD, USERNAME, EMAIL, PHONE) 
-VALUES ('testId1', 'password1', 'test1', 'test1@gmail.com', '010-1234-5678');
-
-INSERT INTO USERS (USER_ID, PASSWORD, USERNAME, EMAIL, PHONE) 
-VALUES ('testId2', 'password2', 'test2', 'test2@gmail.com', '010-1234-6789');
-
-INSERT INTO USERS (USER_ID, PASSWORD, USERNAME, EMAIL, PHONE) 
-VALUES ('testId3', 'password3', 'test3', 'test3@gmail.com', '010-4321-5678');
-
 COMMIT;
 

@@ -74,3 +74,56 @@
   color: white;
   cursor: pointer;
 }
+
+/* 로그인 버튼 비활성화 */
+.loginButton.disabled {
+    background-color: #a2a1a1;
+    cursor: not-allowed;
+}
+
+/* 로그인 버튼 활성화 */
+.loginButton.enabled {
+    background-color: #4070f4;
+    cursor: pointer;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.sloginButton {
+  width: 150px;
+  height: 48px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #4070f4;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.centerText {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.smallText {
+	text-align: center;
+	font-size: 14px;
+}
+
+/* 좌우로 배치*/
+.inputWrapInline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 25px;
+}
