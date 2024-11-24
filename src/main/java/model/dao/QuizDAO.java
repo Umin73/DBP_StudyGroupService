@@ -15,7 +15,7 @@ public class QuizDAO {
 
     // 퀴즈 생성
     public int createQuiz(Quiz quiz) {
-        String sql = "INSERT INTO Quiz (quiz_id, title, group_id, createDate, score, section, percent, submitNumber, submitYN, question_id, user_id) " +
+        String sql = "INSERT INTO Quiz (quiz_id, title, group_id, createDate, section, percent, submitNumber, submitYN, question_id, user_id) " +
                      "VALUES (?, ?, ?, SYSDATE, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = connectionManager.getConnection();
@@ -24,7 +24,6 @@ public class QuizDAO {
             pstmt.setString(1, quiz.getQuizId());
             pstmt.setString(2, quiz.getTitle());
             pstmt.setString(3, quiz.getGroupId());
-            pstmt.setDouble(4, quiz.getScore());
             pstmt.setString(5, quiz.getSection());
             pstmt.setDouble(6, quiz.getPercent());
             pstmt.setInt(7, quiz.getSubmitNumber());
@@ -55,7 +54,6 @@ public class QuizDAO {
                     rs.getString("quiz_id"),
                     rs.getString("title"),
                     rs.getString("group_id"),
-                    rs.getDouble("score"),
                     rs.getString("section"),
                     rs.getDouble("percent"),
                     rs.getInt("submitNumber"),
@@ -84,7 +82,6 @@ public class QuizDAO {
                     rs.getString("quiz_id"),
                     rs.getString("title"),
                     rs.getString("group_id"),
-                    rs.getDouble("score"),
                     rs.getString("section"),
                     rs.getDouble("percent"),
                     rs.getInt("submitNumber"),
@@ -117,13 +114,12 @@ public class QuizDAO {
 
     // 퀴즈 업데이트
     public int updateQuiz(Quiz quiz) {
-        String sql = "UPDATE Quiz SET title = ?, score = ?, section = ?, percent = ?, submitNumber = ?, submitYN = ? WHERE quiz_id = ?";
+        String sql = "UPDATE Quiz SET title = ?, section = ?, percent = ?, submitNumber = ?, submitYN = ? WHERE quiz_id = ?";
 
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, quiz.getTitle());
-            pstmt.setDouble(2, quiz.getScore());
             pstmt.setString(3, quiz.getSection());
             pstmt.setDouble(4, quiz.getPercent());
             pstmt.setInt(5, quiz.getSubmitNumber());

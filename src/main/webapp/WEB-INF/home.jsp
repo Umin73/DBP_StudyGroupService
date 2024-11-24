@@ -10,7 +10,7 @@
 </head>
 <body>
 	<jsp:include page="Header.jsp" />
-	<jsp:include page="/html/Sidebar.html" />
+	<jsp:include page="sidebar.jsp" />
 	<div class="main-content">
 	
 		<!-- 광고 -->
