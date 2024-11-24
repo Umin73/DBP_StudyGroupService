@@ -17,7 +17,7 @@
 	}
 </script>
 
-<title>아이디 찾기</title>
+<title>아이디 찾기 결과</title>
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
@@ -26,7 +26,7 @@
 		<div class="login-titleWrap">아이디 찾기 결과</div>
         <div class="contentWrap">
             <c:if test="${success}">
-                <p class="resultText">찾으신 아이디는 <strong>${userId}</strong>입니다.</p>
+                <p class="centerText">찾으신 아이디는 <strong>${userId}</strong>입니다.</p>
                 
                 <div class="buttonContainer">
 	                <div>
@@ -40,7 +40,7 @@
             	</div>
             </c:if>
             <c:if test="${!success}">
-                <p class="resultText">${errorMessage}</p>
+                <p class="centerText">${errorMessage}</p>
                 
                 <div class="buttonContainer">
 	                <div>

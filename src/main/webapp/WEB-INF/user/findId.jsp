@@ -41,13 +41,13 @@
         <div class="contentWrap">
         	<form method="POST" action="<c:url value='/user/findId' />">
         	<div class="inputWrap">
-        		<input type="text" class="input" name="username" placeholder="등록한 이름" required />
+        		<input type="text" class="input" name="username" placeholder="이름" required />
         	</div>
         	<div class="inputWrap">
         		<input type="text" class="input" name="phone" placeholder="휴대폰 번호를 '-' 없이 입력" required />
         	</div>
         	<div>
-        		<input type="submit" class="loginButton" value="찾기" onClick="findId(event)" />
+        		<input type="submit" class="loginButton" value="아이디 찾기" onClick="findId(event)" />
         	</div>
         	</form>
         </div>

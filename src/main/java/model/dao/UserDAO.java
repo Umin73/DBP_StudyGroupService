@@ -132,7 +132,7 @@ public class UserDAO {
     public List<User> findAllUser() throws SQLException {
         String sql = "SELECT user_id, password, username, email, phone " 
                    + "FROM USERS "
-                   + "ORDER BY id";
+                   + "ORDER BY user_id";
         jdbcUtil.setSqlAndParameters(sql, null);
                     
         try {
@@ -197,5 +197,57 @@ public class UserDAO {
             jdbcUtil.close();
         }
         return false;
+    }
+    
+    public boolean existingUser(String userId, String username, String email) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM USERS WHERE user_id = ? AND username = ? AND email = ?";
+        jdbcUtil.setSqlAndParameters(sql, new Object[] { userId, username, email });
+        
+        try {
+            ResultSet rs = jdbcUtil.executeQuery();
+            if(rs.next()) {
+                int count = rs.getInt(1);
+                return (count == 1 ? true : false);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            jdbcUtil.close();
+        }
+        return false;
+    }
+    
+    public boolean updatePassword(String user_id, String newPassword) throws SQLException {
+        String sql = "UPDATE USERS SET password = ? WHERE user_id = ?";
+        jdbcUtil.setSqlAndParameters(sql, new Object[] {newPassword, user_id});
+        
+        try {
+            int result = jdbcUtil.executeUpdate();
+            return result > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            jdbcUtil.commit();
+            jdbcUtil.close();
+        }
+        return false;
+    }
+
+
+    public String findEmailByUserIdAndUsername(String userId, String username) throws SQLException {
+        String sql = "SELECT email FROM USERS WHERE user_id = ? AND username = ?";
+        jdbcUtil.setSqlAndParameters(sql, new Object[] { userId, username });
+
+        try {
+            ResultSet rs = jdbcUtil.executeQuery();
+            if (rs.next()) {
+                return rs.getString("email");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            jdbcUtil.close();
+        }
+        return null;
     }
 }
