@@ -29,7 +29,7 @@ public class FindPwService {
     public void sendEmail(String recipientEmail, String verificationCode) throws MessagingException {
 
         final String user = "comtownddwu@naver.com";
-        final String password = "townin123!!";
+        final String password = "password";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.naver.com");
