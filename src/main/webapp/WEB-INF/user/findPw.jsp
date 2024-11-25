@@ -37,9 +37,7 @@
         <div class="login-titleWrap">비밀번호 찾기</div>
         
         <c:if test="${not empty errorMessage}">
-            <script>
-                alert("${errorMessage}");
-            </script>
+            <p class="errorMessage">${errorMessage}</p>
         </c:if>
 
         <div class="contentWrap">
