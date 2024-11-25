@@ -65,19 +65,29 @@
         </c:if>
 
         <!-- 인증번호 확인 -->
-        <div class="contentWrap">
-            <form id="verifyForm" method="POST" action="<c:url value='/user/verifyCode' />">
-                <input type="hidden" name="user_id" value="${user_id}" />
-                <input type="hidden" name="email" value="${email}" />
-                <div class="inputWrapInline">
-                    <input type="text" class="input" name="verifyCode" placeholder="인증번호" required />
-                    <input type="button" class="loginButton" value="인증 확인" onClick="validateVerification(event)" />
-                </div>
-            </form>
-        </div>
+        <c:if test="${!verifySuccess}">
+        	<div class="contentWrap">
+	            <p class="smallText">계정에 등록된 이메일로 전송된 인증번호를 입력해주세요.</p>
+	        </div>
+        
+        	<div class="contentWrap">
+	            <form id="verifyForm" method="POST" action="<c:url value='/user/verifyCode' />">
+	                <input type="hidden" name="user_id" value="${user_id}" />
+	                <input type="hidden" name="email" value="${email}" />
+	                <div class="inputWrapInline">
+	                    <input type="text" class="input" name="verifyCode" placeholder="인증번호" required />
+	                    <input type="button" class="checkButton" value="인증 확인" onClick="validateVerification(event)" />
+	                </div>
+	            </form>
+	        </div>
+        </c:if>
 
         <!-- 비밀번호 변경 -->
         <c:if test="${verifySuccess}">
+        	<div class="contentWrap">
+	            <p class="smallText">새로운 비밀번호를 입력해주세요.</p>
+	        </div>
+        
             <div class="contentWrap">
                 <form id="changePwForm" method="POST" action="<c:url value='/user/changePw' />">
                     <input type="hidden" name="user_id" value="${user_id}" />

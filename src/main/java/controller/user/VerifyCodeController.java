@@ -26,6 +26,8 @@ public class VerifyCodeController implements Controller{
             request.setAttribute("email", email);
             request.setAttribute("verifySuccess", true);
         } else {
+            request.setAttribute("user_id", userId);
+            request.setAttribute("email", email);
             request.setAttribute("errorMessage", "인증번호가 올바르지 않습니다.");
             request.setAttribute("verifySuccess", false);
         }
