@@ -34,8 +34,9 @@ public class CreateGroupController implements Controller {
             GroupManager groupMan = GroupManager.getInstance();
             groupMan.create(group);
             
-            // 성공 시 그룹 view 페이지로 리디렉션
-            return "redirect:/group/create";
+            // 성공 
+            request.setAttribute("successMessage", "그룹이 생성되었습니다.");
+            return "/group/createGroup.jsp";
         } catch (ExistingGroupException e) {
             // 그룹 ID가 이미 존재하는 경우
             request.setAttribute("createFailed", true);

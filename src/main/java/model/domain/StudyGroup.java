@@ -9,6 +9,7 @@ public class StudyGroup {
     private String groupDescription;
     private String goal;
     private String category;
+    private int currMembers;
     private int maxMembers;
     private Date startDate;
     private String leaderId;
@@ -70,10 +71,21 @@ public class StudyGroup {
 		this.groupDescription = groupDescription;
 		this.goal = goal;
 		this.category = category;
+		this.setCurrMembers(0);
 		this.maxMembers = maxMembers;
 	}
 
-	public void createGroup() {
+	public StudyGroup(String groupId, String groupName, String groupDescription, String category, int currMembers, int maxMembers) {
+        super();
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupDescription = groupDescription;
+        this.category = category;
+        this.setCurrMembers(currMembers);
+        this.maxMembers = maxMembers;
+    }
+
+    public void createGroup() {
         
     }
     
@@ -187,6 +199,14 @@ public class StudyGroup {
 
     public void setAnnouncements(List<Notice> announcements) {
         this.Notices = announcements;
+    }
+
+    public int getCurrMembers() {
+        return currMembers;
+    }
+
+    public void setCurrMembers(int currMembers) {
+        this.currMembers = currMembers;
     }
 
     

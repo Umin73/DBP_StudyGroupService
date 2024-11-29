@@ -21,10 +21,10 @@ public class StudyGroupDAO {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         group.setGroupId(uuid);
         
-        String sql = "INSERT INTO STUDYGROUP VALUES (?, ?, ?, ?, ?, ?)";     
+        String sql = "INSERT INTO STUDYGROUP VALUES (?, ?, ?, ?, ?, ?, ?)";     
         Object[] param = new Object[] {
                 group.getGroupId(), group.getGroupName(), group.getGroupDescription(),
-                group.getGoal(), group.getCategory(), group.getMaxMembers()};             
+                group.getGoal(), group.getCategory(), group.getMaxMembers(), group.getCurrMembers()};             
         jdbcUtil.setSqlAndParameters(sql, param);
         
         try {    
@@ -139,10 +139,7 @@ public class StudyGroupDAO {
     
     // 전체 그룹 리스트
     public List<StudyGroup> findGroupList() throws SQLException {
-        String sql = "SELECT groupId, groupName, groupDescription, category "
-                    + "FROM StudyGroup"
-                    + "GROUP BY groupId, groupName, category "
-                    + "ORDER BY groupName";
+        String sql = "SELECT group_id, groupname, groupdescription, category, currmember, maxmember FROM STUDYGROUP";
         jdbcUtil.setSqlAndParameters(sql, null);    // 파라미터가 없으므로 null로 설정
 
         try {
@@ -150,10 +147,12 @@ public class StudyGroupDAO {
             List<StudyGroup> groupList = new ArrayList<StudyGroup>();   // 스터디그룹들의 리스트 생성
             while (rs.next()) {
                 StudyGroup group = new StudyGroup(
-                        rs.getString("groupId"),
-                        rs.getString("groupName"),
-                        rs.getString("groupDescription"),
-                        rs.getString("category"));
+                        rs.getString("group_id"),
+                        rs.getString("groupname"),
+                        rs.getString("groupdescription"),
+                        rs.getString("category"),
+                        rs.getInt("currmember"),
+                        rs.getInt("maxmember"));
                 groupList.add(group);   // 생성된 객체를 리스트에 추가
             }
             return groupList;                    
