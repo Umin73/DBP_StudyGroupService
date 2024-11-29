@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class StudyGroup {
-    private int groupId;
+    private String groupId;
     private String groupName;
     private String groupDescription;
     private String goal;
@@ -16,12 +16,12 @@ public class StudyGroup {
     private List<GroupMember> members;
     private List<Schedule> schedules;
     private List<Assignment> assignments;
-    private List<Announcement> announcements;
+    private List<Notice> Notices;
 
-    public StudyGroup() { }
+    public StudyGroup() { } //기본생성자 
     
     /*
-    public StudyGroup(int groupId, String groupName, String groupDescription, String goal, String category, int maxMembers, 
+    public StudyGroup(String groupId, String groupName, String groupDescription, String goal, String category, int maxMembers, 
             Date startDate, String leaderId, String leaderName,
             List<GroupMember> members, List<Schedule> schedules, List<Assignment> assignments, List<Announcement> announcements) {
         super();
@@ -41,7 +41,7 @@ public class StudyGroup {
     }
     */
     
-    public StudyGroup(int groupId, String groupName, String groupDescription, String goal, String category, int maxMembers, 
+    public StudyGroup(String groupId, String groupName, String groupDescription, String goal, String category, int maxMembers, 
             Date startDate, String leaderId, String leaderName) {
         super();
         this.groupId = groupId;
@@ -55,7 +55,7 @@ public class StudyGroup {
         this.leaderName = leaderName;
     }
     
-    public StudyGroup(int groupId, String groupName, String groupDescription, String category) {
+    public StudyGroup(String groupId, String groupName, String groupDescription, String category) {
         super();
         this.groupId = groupId;
         this.groupName = groupName;
@@ -63,7 +63,17 @@ public class StudyGroup {
         this.category = category;
     }
 
-    public void createGroup() {
+    public StudyGroup(String groupName, String groupDescription, String goal, String category,
+			int maxMembers) {
+		super();
+		this.groupName = groupName;
+		this.groupDescription = groupDescription;
+		this.goal = goal;
+		this.category = category;
+		this.maxMembers = maxMembers;
+	}
+
+	public void createGroup() {
         
     }
     
@@ -75,11 +85,11 @@ public class StudyGroup {
 
     }
 
-    public int getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
@@ -171,12 +181,12 @@ public class StudyGroup {
         this.assignments = assignments;
     }
 
-    public List<Announcement> getAnnouncements() {
-        return announcements;
+    public List<Notice> getAnnouncements() {
+        return Notices;
     }
 
-    public void setAnnouncements(List<Announcement> announcements) {
-        this.announcements = announcements;
+    public void setAnnouncements(List<Notice> announcements) {
+        this.Notices = announcements;
     }
 
     

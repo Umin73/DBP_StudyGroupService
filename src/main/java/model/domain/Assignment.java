@@ -2,21 +2,40 @@ package model.domain;
 
 import java.util.Date;
 
-import model.domain.User;
+
 
 public class Assignment {
+	private String assignmentId;
 	private String title;
 	private String description;
 	private Date deadline;
+	private String groupId;
 	
-	
-	public Assignment(String title, String description, Date deadline) {
+	public Assignment(String assignmentId, String title, String description, Date deadline, String groupId) {
 		super();
+		this.assignmentId = assignmentId;
 		this.title = title;
 		this.description = description;
 		this.deadline = deadline;
+		this.groupId = groupId;
 	}
 	
+	public String getAssignmentId() {
+		return assignmentId;
+	}
+
+	public void setAssignmentId(String assignmentId) {
+		this.assignmentId = assignmentId;
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
 	public void submitAssignment(User user) {
 		
 	}
