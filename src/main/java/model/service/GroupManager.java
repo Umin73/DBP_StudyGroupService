@@ -1,6 +1,7 @@
 package model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import model.dao.StudyGroupDAO;
 import model.domain.StudyGroup;
@@ -26,5 +27,9 @@ public class GroupManager {
             throw new ExistingGroupException(group.getGroupId() + "는 존재하는 그룹 ID입니다.");
         }
         return groupDao.create(group);
+    }
+    
+    public List<StudyGroup> findAllGroups() throws SQLException {
+        return groupDao.findGroupList();
     }
 }

@@ -47,9 +47,15 @@
 			}
 			
 			form.submit();
-			
-			
 		}
+		
+		window.onload = function() {
+	        const successMessage = "<c:out value='${successMessage}' />";
+	        if (successMessage) {
+	            alert(successMessage);
+	            window.location.href = "<c:url value='/group/viewAll' />"; // viewAllGroup.jsp로 이동
+	        }
+	    };
 	</script>
 
 </head>
@@ -78,12 +84,12 @@
                 <label for="groupCategory">카테고리: </label>
                 <select id="groupCategory" name="groupCategory" required>
                     <option value="">카테고리 선택</option>
-                    <option value="Technology">어학</option>
-                    <option value="Health">프로그래밍</option>
-                    <option value="Education">취업</option>
-                    <option value="Sports">자격증</option>
-                    <option value="Entertainment">임용</option>
-                    <option value="etc">기타</option>
+                    <option value="어학">어학</option>
+                    <option value="프로그래밍">프로그래밍</option>
+                    <option value="취업">취업</option>
+                    <option value="자격증">자격증</option>
+                    <option value="임용">임용</option>
+                    <option value="기타">기타</option>
                 </select>
             </div>
             <!-- 인원 수 -->

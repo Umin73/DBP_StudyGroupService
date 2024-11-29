@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.group.CreateGroupController;
+import controller.group.ViewGroupController;
 import controller.user.ChangePwController;
 import controller.user.FindIdController;
 import controller.user.LoginController;
@@ -50,6 +51,9 @@ public class RequestMapping {
         // 그룹 생성
         mappings.put("/group/create", new ForwardController("/group/createGroup.jsp"));
         mappings.put("/group/create/process", new CreateGroupController());
+        
+        // 그룹 리스트 조회
+        mappings.put("/group/viewAll", new ViewGroupController());
     }
 
     public Controller findController(String uri) {  

@@ -15,7 +15,7 @@
     <ul>
         <li><a onclick="navigateToPage('<c:url value="/home"/>')">HOME</a></li>
         <li><a onclick="navigateToPage('<c:url value="/group/create"/>')">스터디 그룹 생성</a></li>
-        <li><a href="findGroup.jsp">스터디 그룹 찾기</a></li>
+        <li><a onclick="navigateToPage('<c:url value="/group/viewAll"/>')">스터디 그룹 찾기</a></li>
         <li><a class="active">참여 중인 스터디</a></li>
         <li><a href="myPage.jsp">MY PAGE</a></li>
     </ul>
