@@ -21,7 +21,7 @@
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
-	<jsp:include page="/html/Sidebar.html" />
+	<jsp:include page="../sidebar.jsp" />
 	<div class="main-content">
 		<div class="login-titleWrap">아이디 찾기 결과</div>
         <div class="contentWrap">

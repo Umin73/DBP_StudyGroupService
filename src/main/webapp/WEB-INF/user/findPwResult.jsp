@@ -53,7 +53,7 @@
 </head>
 <body>
     <jsp:include page="../Header.jsp" />
-    <jsp:include page="/html/Sidebar.html" />
+	<jsp:include page="../sidebar.jsp" />
 
     <div class="main-content">
         <div class="login-titleWrap">비밀번호 변경</div>

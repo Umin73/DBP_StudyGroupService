@@ -69,7 +69,7 @@
 
 <body>
 	<jsp:include page="../Header.jsp" />
-	<jsp:include page="/html/Sidebar.html" />
+	<jsp:include page="../sidebar.jsp" />
 	<div class="main-content">
 		<div class="titleWrap">회원가입</div>
 		<div class="contentWrap">

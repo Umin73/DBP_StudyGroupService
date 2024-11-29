@@ -39,7 +39,7 @@
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
-	<jsp:include page="/html/Sidebar.html" />
+	<jsp:include page="../sidebar.jsp" />
 	<div class="main-content">
 		<div class="login-titleWrap">로그인</div>
         <div class="contentWrap">

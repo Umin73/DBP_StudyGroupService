@@ -9,8 +9,8 @@
 <title>MY PAGE</title>
 </head>
 <body>
-	<jsp:include page="/html/Header.html" />
-	<jsp:include page="/html/Sidebar.html" />
+	<jsp:include page="../Header.jsp" />
+	<jsp:include page="../sidebar.jsp" />
 	
 	<div class="main-content">
 		
