@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import controller.group.CreateGroupController;
 import controller.user.ChangePwController;
 import controller.user.FindIdController;
 import controller.user.LoginController;
@@ -21,11 +22,12 @@ public class RequestMapping {
     private Map<String, Controller> mappings = new HashMap<String, Controller>();
 
     public void initMapping() {
-    	// 각 uri에 대응되는 controller 객체를 생성 및 저장
+        // 각 uri에 대응되는 controller 객체를 생성 및 저장
         
         // 기본 경로 및 공통
         mappings.put("/", new ForwardController("/index.jsp"));
         mappings.put("/header", new ForwardController("/Header.jsp"));
+        mappings.put("/sidebar", new ForwardController("/sidebar.jsp"));
         mappings.put("/home", new HomeController());
         
         // 회원가입
@@ -44,10 +46,14 @@ public class RequestMapping {
         mappings.put("/user/findPw", new SendEmailController());
         mappings.put("/user/verifyCode", new VerifyCodeController());
         mappings.put("/user/changePw", new ChangePwController());
+    
+        // 그룹 생성
+        mappings.put("/group/create", new ForwardController("/group/createGroup.jsp"));
+        mappings.put("/group/create/process", new CreateGroupController());
     }
 
-    public Controller findController(String uri) {	
-    	// 주어진 uri에 대응되는 controller 객체를 찾아 반환
+    public Controller findController(String uri) {  
+        // 주어진 uri에 대응되는 controller 객체를 찾아 반환
         return mappings.get(uri);
     }
 }

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import model.domain.StudyGroup;
 
@@ -13,23 +14,22 @@ public class StudyGroupDAO {
     public StudyGroupDAO() {          
         jdbcUtil = new JDBCUtil();
     }
-
+    
     // 그룹 생성
-    public StudyGroup create(StudyGroup group) throws SQLException {
-        String sql = "INSERT INTO StudyGroup VALUES (groupId_seq.nextval, ?, ?, ?, ?, ?, SYSDATE, ?)";     
+    public int create(StudyGroup group) throws SQLException {
+        
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        group.setGroupId(uuid);
+        
+        String sql = "INSERT INTO STUDYGROUP VALUES (?, ?, ?, ?, ?, ?)";     
         Object[] param = new Object[] {
-                group.getGroupName(), group.getGroupDescription(), group.getGoal(), group.getCategory(), group.getMaxMembers(), group.getLeaderId()};             
+                group.getGroupId(), group.getGroupName(), group.getGroupDescription(),
+                group.getGoal(), group.getCategory(), group.getMaxMembers()};             
         jdbcUtil.setSqlAndParameters(sql, param);
-                        
-        String key[] = {"groupId"}; // PK 컬럼의 이름     
+        
         try {    
-            jdbcUtil.executeUpdate(key);  // insert 문 실행
-            ResultSet rs = jdbcUtil.getGeneratedKeys();
-            if(rs.next()) {
-                int generatedKey = rs.getInt(1);   // 생성된 PK 값
-                group.setGroupId(generatedKey);   // id 필드에 저장  
-            }
-            return group;
+            int result = jdbcUtil.executeUpdate();
+            return result;
         } catch (Exception ex) {
             jdbcUtil.rollback();
             ex.printStackTrace();
@@ -37,13 +37,13 @@ public class StudyGroupDAO {
             jdbcUtil.commit();
             jdbcUtil.close();   // resource 반환
         }       
-        return null;            
+        return 0;            
     }
     
     // 그룹 수정
     public int updateGroup(StudyGroup group) throws SQLException {
-        String sql = "UPDATE StudyGroup "
-                    + "SET groupName=?, goal=?, maxMembers=?, leaderId=? "
+        String sql = "UPDATE STUDYGROUP "
+                    + "SET groupname=?, goal=?, maxmember=?, leaderId=? "
                     + "WHERE groupId=?";
         String leaderId = group.getLeaderId();
         if (leaderId.equals("")) leaderId = null;
@@ -108,7 +108,7 @@ public class StudyGroupDAO {
     }
     
     // 그룹 ID로 스터디 그룹의 세부 정보를 가져오기
-    public StudyGroup findGroupById(int groupId) throws SQLException {
+    public StudyGroup findGroupById(String groupId) throws SQLException {
         String sql = "SELECT groupName, groupDescription, goal, category, maxMembers, startDate, leaderId, u.name As leaderName "
                     + "FROM StudyGroup s LEFT OUTER JOIN USERINFO u ON s.leaderId = u.userId "
                     + "WHERE groupId=?";
@@ -150,7 +150,7 @@ public class StudyGroupDAO {
             List<StudyGroup> groupList = new ArrayList<StudyGroup>();   // 스터디그룹들의 리스트 생성
             while (rs.next()) {
                 StudyGroup group = new StudyGroup(
-                        rs.getInt("groupId"),
+                        rs.getString("groupId"),
                         rs.getString("groupName"),
                         rs.getString("groupDescription"),
                         rs.getString("category"));
@@ -168,7 +168,7 @@ public class StudyGroupDAO {
     
     // 그룹 존재 여부
     public boolean existingGroup(String groupId) throws SQLException {
-        String sql = "SELECT count(*) FROM StudyGroup WHERE groupId=?";      
+        String sql = "SELECT count(*) FROM STUDYGROUP WHERE group_id = ?";      
         jdbcUtil.setSqlAndParameters(sql, new Object[] {groupId});
 
         try {
