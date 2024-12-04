@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=utf-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
-	function navigateToPage(targetUri) {
+	function navigateToLogin(targetUri) {
 		const form = document.createElement('form');
 		form.action = targetUri;
 		form.method="GET";
@@ -25,7 +25,7 @@
         
         <c:choose>
         	<c:when test="${isLoggedIn}">
-        		<button class="login" onClick="navigateToPage'<c:url value='/user/logout'/>')">Log Out</button>
+        		<button class="login" onClick="navigateToLogout('<c:url value='/user/logout'/>')">Log Out</button>
         	</c:when>
 
         	<c:otherwise>
