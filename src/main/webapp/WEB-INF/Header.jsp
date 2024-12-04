@@ -25,11 +25,11 @@
         
         <c:choose>
         	<c:when test="${isLoggedIn}">
-        		<button class="login" onClick="navigateToLogin'<c:url value='/user/logout'/>')">Log Out</button>
+        		<button class="login" onClick="navigateToLogout'<c:url value='/user/logout'/>')">Log Out</button>
         	</c:when>
 
         	<c:otherwise>
-        		<button class="login" onClick="navigateToLogout('<c:url value='/user/login/form'/>')">Log In</button>
+        		<button class="login" onClick="navigateToLogin('<c:url value='/user/login/form'/>')">Log In</button>
         	</c:otherwise>
         </c:choose>
     </div>
