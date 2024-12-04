@@ -8,6 +8,13 @@
 <link rel=stylesheet href="${pageContext.request.contextPath}/css/viewGroup.css" type="text/css">
 
 <script>
+function navigateToPage(targetUri) {
+    const form = document.createElement('form');
+    form.action = targetUri;
+    form.method = "GET";
+    document.body.appendChild(form);
+    form.submit();
+}
 
 function filterGroups(category) {
     const allCards = document.querySelectorAll(".group-card");

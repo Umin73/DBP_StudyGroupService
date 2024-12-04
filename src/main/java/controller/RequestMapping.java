@@ -54,6 +54,12 @@ public class RequestMapping {
         
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
+        
+        //그룹 정보 조회
+        mappings.put("/group/showGroup", new ForwardController("/group/showGroup.jsp"));
+        
+        //퀴즈
+        mappings.put("/quiz/main", new ForwardController("/quiz/quizMain.jsp"));
     }
 
     public Controller findController(String uri) {  
