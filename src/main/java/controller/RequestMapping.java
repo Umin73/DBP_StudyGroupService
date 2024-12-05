@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import controller.group.CreateGroupController;
 import controller.group.ViewGroupController;
+import controller.quiz.CreateQuizController;
+import controller.quiz.QuizController;
 import controller.user.ChangePwController;
 import controller.user.FindIdController;
 import controller.user.LoginController;
@@ -54,6 +56,20 @@ public class RequestMapping {
         
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
+        
+        // 참여중인 그룹 상세페이지
+        mappings.put("/user/myGroup", new ForwardController("/user/myGroup.jsp"));
+        
+        // 퀴즈 리스트 조회
+        mappings.put("/quiz/list", new QuizController());
+        
+        // 퀴즈 생성
+        mappings.put("/quiz/create", new ForwardController("/quiz/createQuiz.jsp"));
+        mappings.put("/quiz/create/process", new CreateQuizController());
+        
+        // 퀴즈 풀기
+        //mappings.put("/quiz/answer", new QuizController());
+        mappings.put("/quiz/answer", new ForwardController("/quiz/quizAnswer.jsp"));
     }
 
     public Controller findController(String uri) {  
