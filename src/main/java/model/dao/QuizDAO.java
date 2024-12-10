@@ -15,21 +15,23 @@ public class QuizDAO {
 
     // 퀴즈 생성
     public int createQuiz(Quiz quiz) {
-        String sql = "INSERT INTO Quiz (quiz_id, title, group_id, createDate, section, percent, submitNumber, submitYN, question_id, user_id) " +
-                     "VALUES (?, ?, ?, SYSDATE, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Quiz (quiz_id, title, group_id, createDate, section, percent, submitNumber, submitYN, user_id) " +
+                     "VALUES (?, ?, ?, SYSDATE, ?, ?, ?, ?, ?)";
 
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, quiz.getQuizId());
             pstmt.setString(2, quiz.getTitle());
-            pstmt.setString(3, quiz.getGroupId());
-            pstmt.setString(5, quiz.getSection());
-            pstmt.setDouble(6, quiz.getPercent());
-            pstmt.setInt(7, quiz.getSubmitNumber());
-            pstmt.setString(8, quiz.getSubmitYN());
-            pstmt.setString(9, quiz.getQuestionId());
-            pstmt.setString(10, quiz.getCreatedBy().getUserId());
+            //pstmt.setString(3, quiz.getGroupId());
+            pstmt.setString(3, quiz.getGroupId() != null ? quiz.getGroupId() : "3d085fa1c83a41b9a19cda7a41cb19d7");
+            pstmt.setString(4, quiz.getSection());
+            pstmt.setDouble(5, quiz.getPercent());
+            pstmt.setInt(6, quiz.getSubmitNumber());
+            pstmt.setString(7, quiz.getSubmitYN());
+            //pstmt.setString(8, quiz.getQuestionId());
+            //pstmt.setString(9, quiz.getCreatedBy().getUserId());
+            pstmt.setString(8, (quiz.getCreatedBy() != null) ? quiz.getCreatedBy().getUserId() : "test1");
 
             return pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -58,7 +60,7 @@ public class QuizDAO {
                     rs.getDouble("percent"),
                     rs.getInt("submitNumber"),
                     rs.getString("submitYN"),
-                    rs.getString("question_id"),
+                    //rs.getString("question_id"),
                     new User(rs.getString("user_id"), null, null, null, sql)
                 );
             }
@@ -69,7 +71,7 @@ public class QuizDAO {
     }
 
     // 퀴즈 목록 조회
-    public List<Quiz> findAllQuizzes() {
+    public List<Quiz> findQuizList() {
         String sql = "SELECT * FROM Quiz";
         List<Quiz> quizList = new ArrayList<>();
 
@@ -86,7 +88,7 @@ public class QuizDAO {
                     rs.getDouble("percent"),
                     rs.getInt("submitNumber"),
                     rs.getString("submitYN"),
-                    rs.getString("question_id"),
+                    //rs.getString("question_id"),
                     new User(rs.getString("user_id"), null, null, null, sql)
                 );
                 quizList.add(quiz);
@@ -133,5 +135,37 @@ public class QuizDAO {
         return 0;
     }
     
+    // 정답 확인
+    public boolean checkAnswer(String quizId, String userAnswer) {
+        String sql = "SELECT answer FROM Questions WHERE question_id = (SELECT question_id FROM Quiz WHERE quiz_id = ?)";
+        try (Connection conn = connectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, quizId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("answer").equalsIgnoreCase(userAnswer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // 퀴즈 상태 및 정답 비율 업데이트
+    public int updateQuizStats(String quizId, boolean isCorrect) {
+        String updateQuizSql = "UPDATE Quiz SET submitNumber = submitNumber + 1, " +
+                               "percent = ((percent * (submitNumber - 1) + ?) / submitNumber), submitYN = 'Y' WHERE quiz_id = ?";
+        try (Connection conn = connectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(updateQuizSql)) {
+
+            pstmt.setDouble(1, isCorrect ? 1.0 : 0.0); // 정답이면 1.0 추가
+            pstmt.setString(2, quizId);
+            return pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 }
