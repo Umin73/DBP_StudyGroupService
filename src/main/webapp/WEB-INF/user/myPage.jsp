@@ -7,29 +7,35 @@
 <%@ page import="java.util.List"%>
 
 <%
-    // 세션에서 로그인된 사용자 ID 가져오기
-    String userId = (String) session.getAttribute("userId");
+// 세션에서 로그인된 사용자 ID 가져오기
+String userId = (String) session.getAttribute("userId");
 
-    // 세션에서 userId가 없을 경우 처리 (로그인되지 않은 경우)
-    if (userId == null) {
-        response.sendRedirect("loginForm.jsp");
-        return;
-    }
+// 세션에서 userId가 없을 경우 처리 (로그인되지 않은 경우)
+if (userId == null) {
+	response.sendRedirect("loginForm.jsp");
+	return;
+}
 
-    // 사용자 정보 가져오기
-    UserDAO userDAO = new UserDAO();
-    User user = userDAO.findUser(userId);
+// 사용자 정보 가져오기
+UserDAO userDAO = new UserDAO();
+User user = userDAO.findUser(userId);
 
-    // 그룹 리스트 가져오기 (StudyGroupDAO 사용)
-    StudyGroupDAO groupDAO = new StudyGroupDAO();
-    List<StudyGroup> userGroups = null;
-    try {
-        userGroups = groupDAO.findUser(userId);  // 수정된 부분
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+// 그룹 리스트 가져오기 (StudyGroupDAO 사용)
+StudyGroupDAO groupDAO = new StudyGroupDAO();
+List<StudyGroup> userGroups = null;
+try {
+	userGroups = groupDAO.findUser(userId); // 수정된 부분
+} catch (Exception e) {
+	e.printStackTrace();
+}
 %>
-
+<%
+if (userGroups == null) {
+	System.out.println("userGroups is null");
+} else {
+	System.out.println("userGroups size: " + userGroups.size());
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +44,9 @@
 	href="${pageContext.request.contextPath}/css/index.css" type="text/css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/mygroup.css"
+	type="text/css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/myPage.css"
 	type="text/css">
 <title>MY PAGE</title>
 </head>
@@ -50,41 +59,40 @@
 		<section class="profile">
 			<h2>마이 페이지</h2>
 			<div class="profile-box">
-				<img
-					src="${pageContext.request.contextPath}/img/dbp_profile_sample.png"
-					class="profile-img">
-				<div class="profile-contents">
-					<% if (user != null) { %>
-					<div class="name">
-						이름: <span id="display-username"><%= user.getUsername() %></span>
-					</div>
-					<div class="phone">
-						전화번호: <span id="display-phone"><%= user.getPhone() %></span>
-					</div>
-					<div class="email">
-						이메일: <span id="display-email"><%= user.getEmail() %></span>
-					</div>
-					<% } else { %>
-					<div class="name">사용자 정보를 불러올 수 없습니다.</div>
-					<% } %>
-				</div>
-			</div>
-			<div class="profile-actions">
-				<button id="edit-btn">수정하기</button>
-			</div>
+    <img src="${pageContext.request.contextPath}/img/dbp_profile_sample.png" class="profile-img">
+    <div class="profile-contents">
+        <% if (user != null) { %>
+            <div class="name">
+                이름: <span id="display-username"><%= user.getUsername() %></span>
+            </div>
+            <div class="phone">
+                전화번호: <span id="display-phone"><%= user.getPhone() %></span>
+            </div>
+            <div class="email">
+                이메일: <span id="display-email"><%= user.getEmail() %></span>
+            </div>
+        <% } else { %>
+            <div class="name">사용자 정보를 불러올 수 없습니다.</div>
+        <% } %>
+    </div>
+    <!-- 수정 버튼을 profile-box 내부로 이동 -->
+    <div class="profile-actions">
+        <button id="edit-btn">수정하기</button>
+    </div>
+</div>
 		</section>
 
 		<!-- 수정 폼 -->
 		<div class="edit-profile" style="display: none;">
 			<form id="update-form">
 				<label for="username">이름:</label> <input type="text" name="username"
-					id="username" value="<%= user != null ? user.getUsername() : "" %>"
+					id="username" value="<%=user != null ? user.getUsername() : ""%>"
 					required><br> <label for="phone">전화번호:</label> <input
 					type="text" name="phone" id="phone"
-					value="<%= user != null ? user.getPhone() : "" %>" required><br>
+					value="<%=user != null ? user.getPhone() : ""%>" required><br>
 
 				<label for="email">이메일:</label> <input type="email" name="email"
-					id="email" value="<%= user != null ? user.getEmail() : "" %>"
+					id="email" value="<%=user != null ? user.getEmail() : ""%>"
 					required><br>
 
 				<button type="submit">저장</button>
@@ -97,29 +105,40 @@
 			<h2>참여 중인 스터디</h2>
 			<div class="group-list">
 				<%
-            if (userGroups != null && !userGroups.isEmpty()) {
-                for (StudyGroup group : userGroups) {
-        %>
-				<div class="group-item">
-					<h3><%= group.getGroupName() %></h3>
-					<p><%= group.getGroupDescription() %></p>
-					<p>
-						목표:
-						<%= group.getGoal() %></p>
-					<p>
-						참여자 수:
-						<%= group.getCurrMembers() %>
-						/
-						<%= group.getMaxMembers() %></p>
+				if (userGroups != null && !userGroups.isEmpty()) {
+					for (StudyGroup group : userGroups) {
+				%>
+				<div class="group-item"
+					onclick="location.href='${pageContext.request.contextPath}/user/myGroup'">
+					<!-- 그룹 이미지 -->
+					<div class="group-img">
+						<img
+							src="${pageContext.request.contextPath}/img/group_default.png"
+							alt="그룹 이미지">
+					</div>
+
+					<!-- 그룹 정보 -->
+					<div class="group-contents">
+						<div class="study-category"><%=group.getCategory()%></div>
+						<div class="study-info"><%=group.getGroupName()%></div>
+						<div class="details">
+							<%=group.getGroupDescription()%></div>
+						<div class="participants">
+							참여자 수:
+							<%=group.getCurrMembers()%>
+							/
+							<%=group.getMaxMembers()%></div>
+					</div>
 				</div>
+
 				<%
-                }
-            } else {
-        %>
+				}
+				} else {
+				%>
 				<p>참여 중인 그룹이 없습니다.</p>
 				<%
-            }
-        %>
+				}
+				%>
 			</div>
 		</section>
 	</div>

@@ -166,32 +166,41 @@ public class StudyGroupDAO {
     }
     public List<StudyGroup> findUser(String userId) throws SQLException {
         List<StudyGroup> userGroups = new ArrayList<>();
-        String sql = "SELECT g.GROUP_ID, g.GROUPNAME, g.GROUPDESCRIPTION, g.GOAL, g.MAXMEMBER " +
-                     "FROM STUDYGROUP g " +
-                     "JOIN GROUPMEMBER gm ON g.GROUP_ID = gm.GROUP_ID " +
-                     "WHERE gm.USER_ID = ?";
-        jdbcUtil.setSqlAndParameters(sql, new Object[] { userId });
+        String sql = "SELECT sg.GROUP_ID, sg.GROUPNAME, sg.GROUPDESCRIPTION, sg.GOAL, sg.CATEGORY, sg.MAXMEMBER, sg.CURRMEMBER " +
+                     "FROM GROUPMEMBER gm " +
+                     "JOIN STUDYGROUP sg ON TRIM(gm.GROUP_ID) = TRIM(sg.GROUP_ID) " +
+                     "WHERE TRIM(gm.USER_ID) = TRIM(?)";
+
+        JDBCUtil jdbcUtil = new JDBCUtil();
+        jdbcUtil.setSqlAndParameters(sql, new Object[]{userId});
 
         try {
+            System.out.println("Executing SQL: " + sql + " with userId=[" + userId + "]");
             ResultSet rs = jdbcUtil.executeQuery();
             while (rs.next()) {
                 StudyGroup group = new StudyGroup(
                     rs.getString("GROUP_ID"),
                     rs.getString("GROUPNAME"),
                     rs.getString("GROUPDESCRIPTION"),
-                    rs.getString("GOAL"),
+                    rs.getString("CATEGORY"),
+                    rs.getInt("CURRMEMBER"),
                     rs.getInt("MAXMEMBER")
                 );
-                userGroups.add(group);  // 가져온 그룹을 리스트에 추가
+                System.out.println("Found Group: " + group.getGroupName());
+                userGroups.add(group);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("SQL Exception: " + e.getMessage());
+            throw e;
         } finally {
             jdbcUtil.close();
         }
 
-        return userGroups;  // 그룹 리스트 반환
+        System.out.println("Total Groups Found: " + userGroups.size());
+        return userGroups;
     }
+
+
     // 그룹 존재 여부
     public boolean existingGroup(String groupId) throws SQLException {
         String sql = "SELECT count(*) FROM STUDYGROUP WHERE group_id = ?";      
