@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import controller.group.CreateGroupController;
 import controller.group.ViewGroupController;
 import controller.quiz.CreateQuizController;
+import controller.quiz.QuizAnswerController;
 import controller.quiz.QuizController;
 import controller.user.ChangePwController;
 import controller.user.FindIdController;
@@ -73,6 +74,9 @@ public class RequestMapping {
         // 퀴즈 풀기
         //mappings.put("/quiz/answer", new QuizController());
         mappings.put("/quiz/answer", new ForwardController("/quiz/quizAnswer.jsp"));
+    
+        // 퀴즈 답안 보기
+        mappings.put("/quiz/viewAnswer", new QuizAnswerController());
     }
 
     public Controller findController(String uri) {  

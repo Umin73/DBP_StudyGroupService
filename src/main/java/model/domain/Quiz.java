@@ -14,6 +14,8 @@ public class Quiz {
     //private String questionId;   // 질문 ID
     private User createdBy;      // 퀴즈 생성자
     //private List<Question> questions;  // 퀴즈에 포함된 질문 리스트
+    private String correctAnswer;   // 정답
+    private String userAnswer;      // 사용자 답안
 
     // 생성자
     public Quiz(String quizId, String title, String groupId, String section, double percent,
@@ -69,6 +71,14 @@ public class Quiz {
     /*
      * public List<Question> getQuestions() { return questions; }
      */
+    
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public String getUserAnswer() {
+        return userAnswer;
+    }
 
     public void setQuizId(String quizId) {
         this.quizId = quizId;
@@ -111,6 +121,14 @@ public class Quiz {
      * public void setQuestions(List<Question> questions) { this.questions =
      * questions; }
      */
+    
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
+    }
 
     public void createQuiz() {
         // 퀴즈 생성 로직
