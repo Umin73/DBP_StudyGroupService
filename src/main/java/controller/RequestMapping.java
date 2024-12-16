@@ -49,7 +49,10 @@ public class RequestMapping {
         mappings.put("/user/findPw", new SendEmailController());
         mappings.put("/user/verifyCode", new VerifyCodeController());
         mappings.put("/user/changePw", new ChangePwController());
-    
+        
+        // /mypage 
+        mappings.put("/user/myPage", new ForwardController("/user/myPage.jsp"));
+        
         // 그룹 생성
         mappings.put("/group/create", new ForwardController("/group/createGroup.jsp"));
         mappings.put("/group/create/process", new CreateGroupController());

@@ -56,11 +56,11 @@ public class DispatcherServlet extends HttpServlet {
                 String targetUri = contextPath + uri.substring("redirect:".length());
                 response.sendRedirect(targetUri); // redirect to url
             } else if (uri.startsWith("/WEB-INF")) {
-                // 이미 완전한 경로인 경우
+                // 이미 완전한 경로인 경우, 포워딩을 바로 실행
                 RequestDispatcher rd = request.getRequestDispatcher(uri);
                 rd.forward(request, response); // forward to the view page
             } else {
-                // forwarding 수행
+                // 상대 경로일 경우 /WEB-INF를 추가하여 포워딩
                 String targetUri = "/WEB-INF" + uri;
                 RequestDispatcher rd = request.getRequestDispatcher(targetUri);
                 rd.forward(request, response); // forward to the view page
@@ -70,5 +70,4 @@ public class DispatcherServlet extends HttpServlet {
             throw new ServletException(e.getMessage());
         }
     }
-
 }
