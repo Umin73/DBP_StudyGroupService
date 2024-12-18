@@ -231,8 +231,8 @@ public class StudyGroupDAO {
             jdbcUtil.close();
         }
     }
-
-    
+  
+  
     // 그룹 존재 여부
     public boolean existingGroup(String groupId) throws SQLException {
         String sql = "SELECT count(*) FROM STUDYGROUP WHERE group_id = ?";      

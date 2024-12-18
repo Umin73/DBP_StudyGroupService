@@ -167,5 +167,21 @@ public class QuizDAO {
         }
         return 0;
     }
+    
+    public String findAnswerByQuizId(String quizId) {
+        String sql = "SELECT answer FROM Questions WHERE quiz_id = ?";
+        try (Connection conn = connectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, quizId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("answer");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

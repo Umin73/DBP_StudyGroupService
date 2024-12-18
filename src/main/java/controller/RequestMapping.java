@@ -6,11 +6,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import controller.group.CreateAssignmentController;
 import controller.group.CreateGroupController;
 import controller.group.JoinGroupController;
 import controller.group.PreviewGroupController;
 import controller.group.ViewGroupController;
 import controller.quiz.CreateQuizController;
+import controller.quiz.QuizAnswerController;
 import controller.quiz.QuizController;
 import controller.user.ChangePwController;
 import controller.user.FindIdController;
@@ -51,7 +53,10 @@ public class RequestMapping {
         mappings.put("/user/findPw", new SendEmailController());
         mappings.put("/user/verifyCode", new VerifyCodeController());
         mappings.put("/user/changePw", new ChangePwController());
-    
+        
+        // /mypage 
+        mappings.put("/user/myPage", new ForwardController("/user/myPage.jsp"));
+        
         // 그룹 생성
         mappings.put("/group/create", new ForwardController("/group/createGroup.jsp"));
         mappings.put("/group/create/process", new CreateGroupController());
@@ -59,6 +64,22 @@ public class RequestMapping {
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
         
+        //그룹 정보 조회
+        mappings.put("/group/showGroup", new ForwardController("/group/showGroup.jsp"));
+        mappings.put("/group/myGroup", new ForwardController("/group/myGroup.jsp"));
+     
+        mappings.put("/notice/list", new ForwardController("/group/notice/viewNoticeList.jsp"));
+        mappings.put("/notice/view", new ForwardController("/group/notice/viewNotice.jsp"));
+        mappings.put("/notice/create", new ForwardController("/group/notice/createNotice.jsp"));
+        
+        mappings.put("/assignment/list", new ForwardController("/group/assignment/viewAssignmentList.jsp"));
+        mappings.put("/assignment/view", new ForwardController("/group/assignment/viewAssignment.jsp"));
+        mappings.put("/assignment/create", new ForwardController("/group/assignment/createAssignment.jsp"));
+        mappings.put("/assignment/create/form", new CreateAssignmentController());
+        
+        //퀴즈
+        mappings.put("/quiz/main", new ForwardController("/quiz/quizMain.jsp"));
+      
         // 그룹 미리보기
         mappings.put("/group/preview", new PreviewGroupController());        
         
@@ -81,6 +102,9 @@ public class RequestMapping {
         // 퀴즈 풀기
         //mappings.put("/quiz/answer", new QuizController());
         mappings.put("/quiz/answer", new ForwardController("/quiz/quizAnswer.jsp"));
+    
+        // 퀴즈 답안 보기
+        mappings.put("/quiz/viewAnswer", new QuizAnswerController());
     }
 
     public Controller findController(String uri) {  
