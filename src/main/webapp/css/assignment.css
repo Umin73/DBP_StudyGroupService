@@ -1,0 +1,174 @@
+/* 공통 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 80%;
+    margin: 30px auto;
+    margin-top: 80px;
+    margin-left: 200px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* 버튼 스타일 */
+.button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button-group {
+    margin-bottom: 20px;
+}
+
+.inline-form {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.right {
+    text-align: right;
+}
+
+/* 테이블 스타일 */
+.assignment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.assignment-table thead {
+    background-color: #f4f4f4;
+}
+
+.assignment-table th, 
+.assignment-table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.assignment-table th {
+    font-weight: bold;
+    color: #555;
+}
+
+.assignment-table a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.2s ease-in-out;
+}
+
+.assignment-table a:hover {
+    color: #0056b3;
+}
+
+.assignment-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.assignment-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* 상세 보기 스타일 */
+.assignment-detail {
+    margin-top: 20px;
+}
+
+.assignment-detail p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.assignment-detail .content {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+    white-space: pre-line; /* 줄바꿈 유지 */
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    display: inline-block;
+    background: #5cb85c;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #4cae4c;
+}
+

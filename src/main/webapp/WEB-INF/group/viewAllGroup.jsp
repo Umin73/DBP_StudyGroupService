@@ -8,6 +8,13 @@
 <link rel=stylesheet href="${pageContext.request.contextPath}/css/viewGroup.css" type="text/css">
 
 <script>
+function navigateToPage(targetUri) {
+    const form = document.createElement('form');
+    form.action = targetUri;
+    form.method = "GET";
+    document.body.appendChild(form);
+    form.submit();
+}
 
 function filterGroups(category) {
     const allCards = document.querySelectorAll(".group-card");
@@ -49,6 +56,7 @@ function checkGroupId(targetUri, groupId) {
 <jsp:include page="../Header.jsp" />
 <jsp:include page="../sidebar.jsp" />
 
+<div class="container">
 <!-- 카테고리 탭 -->
 <div class="category-tabs">
         <div id="전체" class="category-tab active" onclick="filterGroups('전체')">전체</div>
@@ -73,6 +81,6 @@ function checkGroupId(targetUri, groupId) {
 			</div>
         </c:forEach>
     </div>
-
+</div>
 </body>
 </html>
