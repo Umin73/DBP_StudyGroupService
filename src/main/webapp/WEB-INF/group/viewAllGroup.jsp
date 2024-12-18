@@ -37,6 +37,7 @@ function filterGroups(category) {
 <jsp:include page="../Header.jsp" />
 <jsp:include page="../sidebar.jsp" />
 
+<div class="container">
 <!-- 카테고리 탭 -->
 <div class="category-tabs">
         <div id="전체" class="category-tab active" onclick="filterGroups('전체')">전체</div>
@@ -61,6 +62,6 @@ function filterGroups(category) {
             </div>
         </c:forEach>
     </div>
-
+</div>
 </body>
 </html>

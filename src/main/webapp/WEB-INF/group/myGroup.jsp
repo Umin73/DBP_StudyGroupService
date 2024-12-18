@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Group</title>
 <link rel=stylesheet href="${pageContext.request.contextPath}/css/index.css" type="text/css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/showGroup.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myGroup.css" type="text/css">
     <script>
         function showCategory(category) {
             const categories = document.querySelectorAll('.category-content');
@@ -36,13 +36,12 @@
         <!-- 상단 카테고리 탭 -->
         <div class="tabs">
             <button onclick="showCategory('schedule')">스터디 일정</button>
-            <button onclick="showCategory('notice')">공지사항</button>
+            <button onclick="navigateToPage('<c:url value="/notice/list"/>')">공지사항</button>
             <button onclick="showCategory('memebr')">멤버</button>
-            <button onclick="showCategory('assignment')">과제</button>
+            <button onclick="navigateToPage('<c:url value="/assignment/list"/>')">과제</button>
             <button onclick="navigateToPage('<c:url value="/quiz/main"/>')">퀴즈</button>
         </div>
         
-        <!-- 카테고리별 요약 내용 -->
         <div id="schedule" class="category-content">
             <h2>스터디 일정</h2>
             <ul>

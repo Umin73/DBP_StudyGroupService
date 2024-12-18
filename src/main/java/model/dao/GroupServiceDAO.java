@@ -19,7 +19,7 @@ public class GroupServiceDAO {
 
     // 공지사항 작성
     public int createNotice(Notice notice) {
-        String sql = "INSERT INTO Notice (noticeId, title, content, createDate, groupId) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Notice (noticeId, title, content, createDate, groupId) VALUES (?, ?, ?, ?, ?)";
         Object[] param = new Object[] {
             notice.getNoticeId(), 
             notice.getTitle(), 
@@ -101,13 +101,19 @@ public class GroupServiceDAO {
 
     // 과제 생성
     public int createAssignment(Assignment assignment) {
-        String sql = "INSERT INTO Assignment (assignmentId, title, description, deadline, groupId) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Assignment (assignment_id, title, description, deadline, group_id, createDate, submitYN) VALUES (?, ?, ?, ?, ?, SYSDATE, ?)";
+        
+        java.sql.Date sqlDeadline = new java.sql.Date(assignment.getDeadline().getTime());
+        //java.sql.Date sqlCreateDate = new java.sql.Date(assignment.getCreateDate().getTime());
+
+        
         Object[] param = new Object[] {
             assignment.getAssignmentId(),
             assignment.getTitle(), 
             assignment.getDescription(), 
-            assignment.getDeadline(), 
-            assignment.getGroupId()
+            sqlDeadline,
+            assignment.getGroupId(),
+            assignment.getSubmitYN()
         };
         
         try {
@@ -123,7 +129,7 @@ public class GroupServiceDAO {
     }
 
     // 과제 보기
-    public Assignment viewAssignment(int assignmentId) {
+    public Assignment viewAssignment(String assignmentId) {
         String sql = "SELECT * FROM Assignment WHERE assignmentId = ?";
         Assignment assignment = null;
         try {
@@ -136,7 +142,9 @@ public class GroupServiceDAO {
                         rs.getString("title"),
                         rs.getString("description"),
                         rs.getDate("deadline"),
-                        rs.getString("groupId")
+                        rs.getString("groupId"),
+                        rs.getDate("createDate"),
+                        rs.getString("submitYN")
                 );
             }
             rs.close();
