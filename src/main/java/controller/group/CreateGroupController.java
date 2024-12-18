@@ -22,17 +22,24 @@ public class CreateGroupController implements Controller {
             String groupCategory = request.getParameter("groupCategory");
             String groupSizeStr = request.getParameter("groupSize"); // null 처리 가능성 확인
             
+            String userId = (String) request.getSession().getAttribute("userId");
+            
+            if (userId == null) {
+                request.setAttribute("error", "로그인이 필요합니다.");
+                return "/user/loginForm.jsp";
+            }
+            
             int groupSize = 1; // 기본값
             if (groupSizeStr != null && !groupSizeStr.isEmpty()) {
                 groupSize = Integer.parseInt(groupSizeStr);
             }
             
             // StudyGroup 객체 생성
-            StudyGroup group = new StudyGroup(groupName, groupDescription, groupGoal, groupCategory, groupSize);
+            StudyGroup group = new StudyGroup(groupName, groupDescription, groupGoal, groupCategory, groupSize, userId);
             
             // GroupManager 인스턴스를 통해 그룹 생성
             GroupManager groupMan = GroupManager.getInstance();
-            groupMan.create(group);
+            groupMan.create(group, userId);
             
             // 성공 
             request.setAttribute("successMessage", "그룹이 생성되었습니다.");

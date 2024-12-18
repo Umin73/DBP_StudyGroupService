@@ -22,11 +22,11 @@ public class GroupManager {
         return groupMan;
     }
     
-    public int create(StudyGroup group) throws SQLException, ExistingGroupException {
+    public int create(StudyGroup group, String userId) throws SQLException, ExistingGroupException {
         if (groupDao.existingGroup(group.getGroupId()) == true) {
             throw new ExistingGroupException(group.getGroupId() + "는 존재하는 그룹 ID입니다.");
         }
-        return groupDao.create(group);
+        return groupDao.create(group, userId);
     }
     
     public List<StudyGroup> findAllGroups() throws SQLException {
