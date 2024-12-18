@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="member" items="${memberList}">
+            <c:forEach var="member" items="${groupMember}">
                 <tr>
                     <td>${member.role}</td>
                     <td>${member.name}</td>

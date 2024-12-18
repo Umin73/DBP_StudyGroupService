@@ -26,6 +26,7 @@ public class GroupManager {
         if (groupDao.existingGroup(group.getGroupId()) == true) {
             throw new ExistingGroupException(group.getGroupId() + "는 존재하는 그룹 ID입니다.");
         }
+
         return groupDao.create(group, userId);
     }
     

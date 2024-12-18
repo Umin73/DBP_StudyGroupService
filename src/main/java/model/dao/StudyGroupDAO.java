@@ -29,6 +29,17 @@ public class StudyGroupDAO {
         
         try {    
             int result = jdbcUtil.executeUpdate();
+            
+            // 그룹 생성 시 그룹 생성자는 리더로 설정
+            // 멤버 추가
+            String insertMemberSql = "INSERT INTO GROUPMEMBER (GROUP_ID, USER_ID, ROLE, ATTENDANCE_RATE, QUIZ_RATE, ASSIGN_RATE) VALUES (?, ?, ?, ?, ?, ?)";
+            jdbcUtil.setSqlAndParameters(insertMemberSql, new Object[] { group.getGroupId(), userId, "leader", 0, 0, 0 });
+            int rowsInserted = jdbcUtil.executeUpdate();
+            if (rowsInserted == 0) {
+                jdbcUtil.rollback();
+                return -1;
+            }
+            
             return result;
         } catch (Exception ex) {
             jdbcUtil.rollback();
@@ -36,7 +47,8 @@ public class StudyGroupDAO {
         } finally {     
             jdbcUtil.commit();
             jdbcUtil.close();   // resource 반환
-        }       
+        }
+        
         return 0;            
     }
     
@@ -164,7 +176,7 @@ public class StudyGroupDAO {
     }
     
     // 그룹 가입
-    public String joinGroup(String groupId, String userId) throws SQLException {
+    public String joinGroup(String groupId, String userId, String role) throws SQLException {
         // 중복 가입 확인
         String checkMemberSql = "SELECT COUNT(*) FROM GROUPMEMBER WHERE GROUP_ID = ? AND USER_ID = ?";
         jdbcUtil.setSqlAndParameters(checkMemberSql, new Object[] { groupId, userId });
@@ -183,8 +195,6 @@ public class StudyGroupDAO {
             if (rs.next()) {
                 int currMembers = rs.getInt("CURRMEMBER");
                 int maxMembers = rs.getInt("MAXMEMBER");
-                System.out.println("현재 멤버 수 = " + currMembers);
-                System.out.println("최대 멤버 수 = " + maxMembers);
 
                 if (currMembers >= maxMembers) {
                     return "Group is full.";
@@ -194,8 +204,8 @@ public class StudyGroupDAO {
             }
 
             // 멤버 추가
-            String insertMemberSql = "INSERT INTO GROUPMEMBER (GROUP_ID, USER_ID) VALUES (?, ?)";
-            jdbcUtil.setSqlAndParameters(insertMemberSql, new Object[] { groupId, userId });
+            String insertMemberSql = "INSERT INTO GROUPMEMBER (GROUP_ID, USER_ID, ROLE, ATTENDANCE_RATE, QUIZ_RATE, ASSIGN_RATE) VALUES (?, ?, ?, ?, ?, ?)";
+            jdbcUtil.setSqlAndParameters(insertMemberSql, new Object[] { groupId, userId, role, 0, 0, 0 });
             int rowsInserted = jdbcUtil.executeUpdate();
             if (rowsInserted == 0) {
                 jdbcUtil.rollback();

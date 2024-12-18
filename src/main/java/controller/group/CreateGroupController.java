@@ -4,11 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
+import model.dao.StudyGroupDAO;
 import model.domain.StudyGroup;
 import model.service.ExistingGroupException;
 import model.service.GroupManager;
 
 public class CreateGroupController implements Controller {
+    
+    private StudyGroupDAO groupDao = new StudyGroupDAO();
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
