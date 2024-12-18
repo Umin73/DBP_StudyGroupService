@@ -1,32 +1,69 @@
 package model.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GroupMember {
-    private List<User> members;
+    private String groupId;
+    private User user;
+    private String role;
+    private double attendanceRate;
+    private double quizRate;
+    private double assignRate;
 
-    public GroupMember() {
-        this.members = new ArrayList<>();
+    public GroupMember(String groupId, User user, String role, double attendanceRate, double quizRate, double assignRate) {
+        this.groupId = groupId;
+        this.user = user;
+        this.role = role;
+        this.attendanceRate = attendanceRate;
+        this.quizRate = quizRate;
+        this.assignRate = assignRate;
     }
 
-    // 멤버 리스트에 사용자 추가
-    public void addMember(User user) {
-        members.add(user);
+    public GroupMember() { }
+
+    public double getAssignRate() {
+        return assignRate;
     }
 
-    // 특정 사용자 제거
-    public void removeMember(User user) {
-        members.remove(user);
+    public void setAssignRate(double assignRate) {
+        this.assignRate = assignRate;
     }
 
-    // 모든 멤버 반환
-    public List<User> getMembers() {
-        return members;
+    public String getGroupId() {
+        return groupId;
     }
 
-    // 멤버 수 반환
-    public int getMemberCount() {
-        return members.size();
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public double getAttendanceRate() {
+        return attendanceRate;
+    }
+
+    public void setAttendanceRate(double attendanceRate) {
+        this.attendanceRate = attendanceRate;
+    }
+
+    public double getQuizRate() {
+        return quizRate;
+    }
+
+    public void setQuizRate(double quizRate) {
+        this.quizRate = quizRate;
     }
 }

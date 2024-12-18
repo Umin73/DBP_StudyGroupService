@@ -21,7 +21,7 @@ public class JoinGroupController implements Controller{
         }
         
         try {
-            String result = groupDao.joinGroup(groupId, userId);
+            String result = groupDao.joinGroup(groupId, userId, "member");
             System.out.println("result is " + result);
             
             if (result.equals("Joined")) {
