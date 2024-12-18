@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.group.CreateGroupController;
+import controller.group.JoinGroupController;
+import controller.group.PreviewGroupController;
 import controller.group.ViewGroupController;
 import controller.quiz.CreateQuizController;
 import controller.quiz.QuizController;
@@ -56,6 +58,15 @@ public class RequestMapping {
         
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
+        
+        // 그룹 미리보기
+        mappings.put("/group/preview", new PreviewGroupController());        
+        
+        // 그룹 가입하기
+        mappings.put("/group/join", new JoinGroupController());
+        
+        // 그룹 홈
+        mappings.put("/group/home", new ForwardController("/group/groupPage.jsp"));
         
         // 참여중인 그룹 상세페이지
         mappings.put("/user/myGroup", new ForwardController("/user/myGroup.jsp"));

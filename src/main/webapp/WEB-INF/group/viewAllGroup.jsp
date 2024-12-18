@@ -22,6 +22,25 @@ function filterGroups(category) {
     document.getElementById(category).classList.add("active");
 }
 
+function checkGroupId(targetUri, groupId) {
+    console.log(groupId);
+    
+    const form = document.createElement('form');
+    form.action = targetUri;
+    form.method = "POST";
+    
+    const input = document.createElement('input');
+    input.type = "hidden";
+    input.name = "groupId";
+    input.value = groupId;
+    form.appendChild(input);
+    
+    document.body.appendChild(form);
+    form.submit();
+}
+
+
+
 </script>
 
 </head>
@@ -45,13 +64,13 @@ function filterGroups(category) {
     <div class="group-container">
         <c:forEach var="group" items="${groupList}">
             <div class="group-card" 
-                 data-category="${group.category}" 
-                 onclick="location.href='showGroup.jsp?groupId=${group.groupId}'">
-                <div class="group-category">${group.category}</div>
-                <div class="group-name">${group.groupName}</div>
-                <div class="group-description">${group.groupDescription}</div>
-                <div class="group-size">참여 인원 ${group.currMembers}/${group.maxMembers}</div>
-            </div>
+			     data-category="${group.category}"
+			     onclick="checkGroupId('<c:url value="/group/preview"/>', '${group.groupId}')">
+			    <div class="group-category">${group.category}</div>
+			    <div class="group-name">${group.groupName}</div>
+			    <div class="group-description">${group.groupDescription}</div>
+			    <div class="group-size">참여 인원 ${group.currMembers}/${group.maxMembers}</div>
+			</div>
         </c:forEach>
     </div>
 

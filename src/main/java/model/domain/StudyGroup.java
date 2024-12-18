@@ -71,10 +71,21 @@ public class StudyGroup {
 		this.groupDescription = groupDescription;
 		this.goal = goal;
 		this.category = category;
-		this.setCurrMembers(0);
+		this.setCurrMembers(1);
 		this.maxMembers = maxMembers;
 	}
-
+    
+    public StudyGroup(String groupId, String groupName, String groupDescription, String goal, String category, int currMembers, int maxMembers) {
+        super();
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.groupDescription = groupDescription;
+        this.goal = goal;
+        this.category = category;
+        this.setCurrMembers(currMembers);
+        this.maxMembers = maxMembers;
+    }
+    
 	public StudyGroup(String groupId, String groupName, String groupDescription, String category, int currMembers, int maxMembers) {
         super();
         this.groupId = groupId;
