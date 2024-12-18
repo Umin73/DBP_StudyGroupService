@@ -11,6 +11,7 @@ import controller.group.JoinGroupController;
 import controller.group.PreviewGroupController;
 import controller.group.ViewGroupController;
 import controller.quiz.CreateQuizController;
+import controller.quiz.QuizAnswerController;
 import controller.quiz.QuizController;
 import controller.user.ChangePwController;
 import controller.user.FindIdController;
@@ -51,7 +52,10 @@ public class RequestMapping {
         mappings.put("/user/findPw", new SendEmailController());
         mappings.put("/user/verifyCode", new VerifyCodeController());
         mappings.put("/user/changePw", new ChangePwController());
-    
+        
+        // /mypage 
+        mappings.put("/user/myPage", new ForwardController("/user/myPage.jsp"));
+        
         // 그룹 생성
         mappings.put("/group/create", new ForwardController("/group/createGroup.jsp"));
         mappings.put("/group/create/process", new CreateGroupController());
@@ -81,6 +85,9 @@ public class RequestMapping {
         // 퀴즈 풀기
         //mappings.put("/quiz/answer", new QuizController());
         mappings.put("/quiz/answer", new ForwardController("/quiz/quizAnswer.jsp"));
+    
+        // 퀴즈 답안 보기
+        mappings.put("/quiz/viewAnswer", new QuizAnswerController());
     }
 
     public Controller findController(String uri) {  

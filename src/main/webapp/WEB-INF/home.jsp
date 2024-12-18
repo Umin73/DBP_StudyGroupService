@@ -12,7 +12,7 @@
 	<jsp:include page="Header.jsp" />
 	<jsp:include page="sidebar.jsp" />
 	<div class="main-content">
-	
+
 		<!-- 광고 -->
     	<section class="main-ad">
     		<img src="img/dbp_mainpage_ad1.png" class="ad-img">
