@@ -16,15 +16,15 @@ public class StudyGroupDAO {
     }
     
     // 그룹 생성
-    public int create(StudyGroup group) throws SQLException {
+    public int create(StudyGroup group, String userId) throws SQLException {
         
         String uuid = UUID.randomUUID().toString().replace("-", "");
         group.setGroupId(uuid);
         
-        String sql = "INSERT INTO STUDYGROUP VALUES (?, ?, ?, ?, ?, ?, ?)";     
+        String sql = "INSERT INTO STUDYGROUP VALUES (?, ?, ?, ?, ?, ?, ?, ?)";     
         Object[] param = new Object[] {
                 group.getGroupId(), group.getGroupName(), group.getGroupDescription(),
-                group.getGoal(), group.getCategory(), group.getMaxMembers(), group.getCurrMembers()};             
+                group.getGoal(), group.getCategory(), group.getMaxMembers(), group.getCurrMembers(), userId};             
         jdbcUtil.setSqlAndParameters(sql, param);
         
         try {    
@@ -109,9 +109,9 @@ public class StudyGroupDAO {
     
     // 그룹 ID로 스터디 그룹의 세부 정보를 가져오기
     public StudyGroup findGroupById(String groupId) throws SQLException {
-        String sql = "SELECT groupName, groupDescription, goal, category, maxMembers, startDate, leaderId, u.name As leaderName "
-                    + "FROM StudyGroup s LEFT OUTER JOIN USERINFO u ON s.leaderId = u.userId "
-                    + "WHERE groupId=?";
+        String sql = "SELECT groupname, groupdescription, goal, category, currmember, maxmember "
+                    + "FROM STUDYGROUP "
+                    + "WHERE group_id=?";
         jdbcUtil.setSqlAndParameters(sql, new Object[] {groupId});
         
         try {
@@ -119,14 +119,12 @@ public class StudyGroupDAO {
             if (rs.next()) {
                 StudyGroup group = new StudyGroup(
                         groupId,
-                        rs.getString("groupName"),
-                        rs.getString("groupDescription"),
+                        rs.getString("groupname"),
+                        rs.getString("groupdescription"),
                         rs.getString("goal"),
                         rs.getString("category"),
-                        rs.getInt("maxMembers"),
-                        rs.getDate("startDate"),
-                        rs.getString("leaderId"),
-                        rs.getString("leaderName"));
+                        rs.getInt("currmember"),
+                        rs.getInt("maxmember"));
                 return group;
             }
         } catch (Exception ex) {
@@ -164,7 +162,103 @@ public class StudyGroupDAO {
         }
         return null;
     }
-    
+
+    public List<StudyGroup> findUser(String userId) throws SQLException {
+        List<StudyGroup> userGroups = new ArrayList<>();
+        String sql = "SELECT sg.GROUP_ID, sg.GROUPNAME, sg.GROUPDESCRIPTION, sg.GOAL, sg.CATEGORY, sg.MAXMEMBER, sg.CURRMEMBER " +
+                     "FROM GROUPMEMBER gm " +
+                     "JOIN STUDYGROUP sg ON TRIM(gm.GROUP_ID) = TRIM(sg.GROUP_ID) " +
+                     "WHERE TRIM(gm.USER_ID) = TRIM(?)";
+
+        JDBCUtil jdbcUtil = new JDBCUtil();
+        jdbcUtil.setSqlAndParameters(sql, new Object[]{userId});
+
+        try {
+            System.out.println("Executing SQL: " + sql + " with userId=[" + userId + "]");
+            ResultSet rs = jdbcUtil.executeQuery();
+            while (rs.next()) {
+                StudyGroup group = new StudyGroup(
+                    rs.getString("GROUP_ID"),
+                    rs.getString("GROUPNAME"),
+                    rs.getString("GROUPDESCRIPTION"),
+                    rs.getString("CATEGORY"),
+                    rs.getInt("CURRMEMBER"),
+                    rs.getInt("MAXMEMBER")
+                );
+                System.out.println("Found Group: " + group.getGroupName());
+                userGroups.add(group);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception: " + e.getMessage());
+            throw e;
+        } finally {
+            jdbcUtil.close();
+        }
+
+        System.out.println("Total Groups Found: " + userGroups.size());
+        return userGroups;
+    }
+
+      // 그룹 가입
+    public String joinGroup(String groupId, String userId) throws SQLException {
+        // 중복 가입 확인
+        String checkMemberSql = "SELECT COUNT(*) FROM GROUPMEMBER WHERE GROUP_ID = ? AND USER_ID = ?";
+        jdbcUtil.setSqlAndParameters(checkMemberSql, new Object[] { groupId, userId });
+
+        try {
+            ResultSet rs = jdbcUtil.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return "User is already a member of this group.";
+            }
+
+            // 그룹 인원 확인
+            String groupCheckSql = "SELECT CURRMEMBER, MAXMEMBER FROM STUDYGROUP WHERE GROUP_ID=?";
+            jdbcUtil.setSqlAndParameters(groupCheckSql, new Object[] { groupId });
+
+            rs = jdbcUtil.executeQuery();
+            if (rs.next()) {
+                int currMembers = rs.getInt("CURRMEMBER");
+                int maxMembers = rs.getInt("MAXMEMBER");
+                System.out.println("현재 멤버 수 = " + currMembers);
+                System.out.println("최대 멤버 수 = " + maxMembers);
+
+                if (currMembers >= maxMembers) {
+                    return "Group is full.";
+                }
+            } else {
+                return "Group not found.";
+            }
+
+            // 멤버 추가
+            String insertMemberSql = "INSERT INTO GROUPMEMBER (GROUP_ID, USER_ID) VALUES (?, ?)";
+            jdbcUtil.setSqlAndParameters(insertMemberSql, new Object[] { groupId, userId });
+            int rowsInserted = jdbcUtil.executeUpdate();
+            if (rowsInserted == 0) {
+                jdbcUtil.rollback();
+                return "Failed to add member.";
+            }
+
+            // 현재 멤버 수 증가
+            String updateMemberCountSql = "UPDATE STUDYGROUP SET CURRMEMBER = CURRMEMBER + 1 WHERE GROUP_ID=?";
+            jdbcUtil.setSqlAndParameters(updateMemberCountSql, new Object[] { groupId });
+            int rowsUpdated = jdbcUtil.executeUpdate();
+            if (rowsUpdated == 0) {
+                jdbcUtil.rollback();
+                return "Failed to update member count.";
+            }
+
+            jdbcUtil.commit();
+            return "Joined";
+        } catch (Exception ex) {
+            jdbcUtil.rollback();
+            ex.printStackTrace();
+            return "An error occurred.";
+        } finally {
+            jdbcUtil.close();
+        }
+    }
+  
+  
     // 그룹 존재 여부
     public boolean existingGroup(String groupId) throws SQLException {
         String sql = "SELECT count(*) FROM STUDYGROUP WHERE group_id = ?";      

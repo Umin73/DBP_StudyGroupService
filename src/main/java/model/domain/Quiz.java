@@ -11,24 +11,26 @@ public class Quiz {
     private double percent;      // 정답률
     private int submitNumber;    // 제출자 수
     private String submitYN;     // 제출 여부 (Y/N)
-    private String questionId;   // 질문 ID
+    //private String questionId;   // 질문 ID
     private User createdBy;      // 퀴즈 생성자
-    private List<Question> questions;  // 퀴즈에 포함된 질문 리스트
+    //private List<Question> questions;  // 퀴즈에 포함된 질문 리스트
+    private String correctAnswer;   // 정답
+    private String userAnswer;      // 사용자 답안
 
     // 생성자
     public Quiz(String quizId, String title, String groupId, String section, double percent,
-                int submitNumber, String submitYN, String questionId, User createdBy) {
+                int submitNumber, String submitYN, User createdBy) {
         this.quizId = quizId;
         this.title = title;
-        this.groupId = groupId;
+        this.groupId = (groupId != null) ? groupId : "3d085fa1c83a41b9a19cda7a41cb19d7"; // 기본 그룹 ID
         this.section = section;
         this.percent = percent;
         this.submitNumber = submitNumber;
         this.submitYN = submitYN;
-        this.questionId = questionId;
-        this.createdBy = createdBy;
+        //this.questionId = (getQuestionId() != null) ? questionId : null;
+        this.createdBy = (createdBy != null) ? createdBy : new User("test1", null, "name1", null, null);
     }
-
+    
     // Getter 메서드들
     public String getQuizId() {
         return quizId;
@@ -58,16 +60,24 @@ public class Quiz {
         return submitYN;
     }
 
-    public String getQuestionId() {
-        return questionId;
-    }
+    /*
+     * public String getQuestionId() { return questionId; }
+     */
 
     public User getCreatedBy() {
         return createdBy;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
+    /*
+     * public List<Question> getQuestions() { return questions; }
+     */
+    
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public String getUserAnswer() {
+        return userAnswer;
     }
 
     public void setQuizId(String quizId) {
@@ -98,19 +108,28 @@ public class Quiz {
         this.submitYN = submitYN;
     }
 
-    public void setQuestionId(String questionId) {
-        this.questionId = questionId;
-    }
+    /*
+     * public void setQuestionId(String questionId) { this.questionId = questionId;
+     * }
+     */
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
+    /*
+     * public void setQuestions(List<Question> questions) { this.questions =
+     * questions; }
+     */
+    
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
-    // 기존 메서드들
+    public void setUserAnswer(String userAnswer) {
+        this.userAnswer = userAnswer;
+    }
+
     public void createQuiz() {
         // 퀴즈 생성 로직
         
@@ -133,7 +152,22 @@ public class Quiz {
         this.submitYN = "Y"; // 유저의 제출 상태 업데이트
     }
 
-    public void viewAnswer(User user) {
+    public boolean checkAnswer(String userAnswer, String correctAnswer) {
         // 답안 확인 로직
+        
+        return userAnswer != null && userAnswer.equalsIgnoreCase(correctAnswer);
     }
+
+    public void updateSubmitStatus(boolean isCorrect) {
+        // 제출 상태 업데이트
+        
+        this.submitNumber++;
+        if (isCorrect) {
+            this.percent = ((this.percent * (this.submitNumber - 1)) + 1.0) / this.submitNumber;
+        } else {
+            this.percent = (this.percent * (this.submitNumber - 1)) / this.submitNumber;
+        }
+        this.submitYN = "Y";
+    }
+
 }

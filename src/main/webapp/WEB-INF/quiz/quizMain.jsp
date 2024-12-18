@@ -8,6 +8,30 @@
 		document.body.appendChild(form);
 		form.submit();
 	}
+	
+	function navigateToAnswerQuiz(targetUri) {
+		const form = document.createElement("form");
+		form.action = targetUri;
+		form.method = "GET";
+		
+		// quizId를 전달하는 hidden input 추가
+		const quizIdInput = document.createElement("input");
+		quizIdInput.type = "hidden";
+		quizIdInput.name = "quizId";
+		quizIdInput.value = quizId;
+		
+		form.appendChild(quizIdInput);
+		document.body.appendChild(form);
+		form.submit();
+	}
+	
+	/* function navigateToAnswerQuiz(baseUri, quizId) {
+	    const form = document.createElement("form");
+	    form.action = `${baseUri}?quizId=${quizId}`;
+	    form.method = "GET";
+	    document.body.appendChild(form);
+	    form.submit();
+	} */
 </script>
 <html>
 <head>
@@ -44,16 +68,24 @@
                 	<div>푼 사람</div>
                 	<div>정답 비율</div>
                 	<div>제출</div>
+                	<div>퀴즈</div>
             	</div>
             	
             	<c:forEach var="quiz" items="${quizList}">
                 	<div class="quiz-item">
-                    	<div>${quiz.round}</div>
-                    	<div>${quiz.title}</div>
-                    	<div>${quiz.creator}</div>
-                    	<div>${quiz.participants}</div>
-                    	<div>${quiz.correctRate}%</div>
-                    	<div>${quiz.submitted ? 'O' : 'X'}</div>
+                    	<div>${quiz.section != null ? quiz.section : 'N/A'}</div>
+                		<div>${quiz.title != null ? quiz.title : 'No Title'}</div>
+                		<div>${quiz.createdBy.username != null ? quiz.createdBy.username : 'Unknown'}</div>
+                		<div>${quiz.submitNumber != null ? quiz.submitNumber : 0}</div>
+                		<div>${quiz.percent != null ? quiz.percent : 0}%</div>
+               		 	<div>${quiz.submitYN ? 'Y' : 'N'}</div>
+                    	<%-- <a href="quizAnswer.jsp?quizId=${quiz.quizId}" class="solve-quiz-link">퀴즈 풀기</a> --%>
+                    	<c:if test="${quiz.submitYN == 'N'}">
+                    		<button onclick="navigateToAnswerQuiz('/quiz/answer', '${quiz.quizId}')">퀴즈 풀기</button>
+                    	</c:if>
+                    	<c:if test="${quiz.submitYN == 'Y'}">
+                    		<button onclick="navigateToAnswerQuiz('/quiz/viewAnswer', '${quiz.quizId}')">답안 보기</button>
+                    	</c:if>
                 	</div>
             	</c:forEach>
         	</div>
