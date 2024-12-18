@@ -16,15 +16,15 @@ public class StudyGroupDAO {
     }
     
     // 그룹 생성
-    public int create(StudyGroup group) throws SQLException {
+    public int create(StudyGroup group, String userId) throws SQLException {
         
         String uuid = UUID.randomUUID().toString().replace("-", "");
         group.setGroupId(uuid);
         
-        String sql = "INSERT INTO STUDYGROUP VALUES (?, ?, ?, ?, ?, ?, ?)";     
+        String sql = "INSERT INTO STUDYGROUP VALUES (?, ?, ?, ?, ?, ?, ?, ?)";     
         Object[] param = new Object[] {
                 group.getGroupId(), group.getGroupName(), group.getGroupDescription(),
-                group.getGoal(), group.getCategory(), group.getMaxMembers(), group.getCurrMembers()};             
+                group.getGoal(), group.getCategory(), group.getMaxMembers(), group.getCurrMembers(), userId};             
         jdbcUtil.setSqlAndParameters(sql, param);
         
         try {    

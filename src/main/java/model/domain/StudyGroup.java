@@ -65,7 +65,7 @@ public class StudyGroup {
     }
 
     public StudyGroup(String groupName, String groupDescription, String goal, String category,
-			int maxMembers) {
+			int maxMembers, String leaderId) {
 		super();
 		this.groupName = groupName;
 		this.groupDescription = groupDescription;
@@ -73,6 +73,7 @@ public class StudyGroup {
 		this.category = category;
 		this.setCurrMembers(1);
 		this.maxMembers = maxMembers;
+		this.leaderId = leaderId;
 	}
     
     public StudyGroup(String groupId, String groupName, String groupDescription, String goal, String category, int currMembers, int maxMembers) {
