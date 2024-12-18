@@ -1,41 +1,32 @@
 package model.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupMember {
-	private User user;
+    private List<User> members;
 
-	
-	public GroupMember(User user) {
-		this.user = user;
-	}
-	
-	public User getUser() {
-		return user;
-	}
-	
-	public void joinGroup(StudyGroup group) {
-		group.inviteMember(user.getEmail());
-	}
-	
-	
-	public void viewAnnouncements(StudyGroup group) {
-        group.getAnnouncements();
+    public GroupMember() {
+        this.members = new ArrayList<>();
     }
 
-    public void viewSchedules(StudyGroup group) {
-        
+    // 멤버 리스트에 사용자 추가
+    public void addMember(User user) {
+        members.add(user);
     }
 
-    public void viewAssignments(StudyGroup group) {
-        group.getAssignments();
+    // 특정 사용자 제거
+    public void removeMember(User user) {
+        members.remove(user);
     }
 
-    public void respondToSchedule(Schedule schedule, boolean response) {
-        if (response) {
-            schedule.addParticipant(user);
-        } else {
-            schedule.removeParticipant(user);
-        }
+    // 모든 멤버 반환
+    public List<User> getMembers() {
+        return members;
+    }
+
+    // 멤버 수 반환
+    public int getMemberCount() {
+        return members.size();
     }
 }
