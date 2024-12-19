@@ -1,19 +1,15 @@
 package controller.group;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
-import model.domain.GroupMember;
 import model.service.GroupManager;
 
-public class MemberListController implements Controller {
+public class ScheduleListController implements Controller{
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
         GroupManager groupMan = GroupManager.getInstance();
         String groupId = request.getParameter("groupId");
         
@@ -21,16 +17,10 @@ public class MemberListController implements Controller {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "groupId가 제공되지 않았습니다.");
             return null;
         }
+
+        // 스터디 일정 생성시 컨트롤러 처리 구현 필요
         
-        List<GroupMember> groupMembers = groupMan.getGroupMemberList(groupId);
-        
-        if (groupMembers == null || groupMembers.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND, "멤버를 찾을 수 없습니다.");
-            return null;
-        }
-        request.setAttribute("groupMember", groupMembers);
-        
-        return "/group/viewMemberList.jsp";
+        return "/group/scheduleList.jsp";
     }
 
 }

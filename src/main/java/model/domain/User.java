@@ -18,6 +18,13 @@ public class User {
         this.email = email;
         this.phone = phone;
     }
+    
+    public User(String userId, String username, String email, String phone) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+    }
 
     public Long getId() {
         return id;

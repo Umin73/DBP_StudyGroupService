@@ -10,8 +10,6 @@
 <script>
 
 function navigateToGroupPage(targetUri, groupId) {
-    console.log(groupId);
-    
     const form = document.createElement('form');
     form.action = targetUri;
     form.method = "POST";

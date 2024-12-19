@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import controller.group.CreateAssignmentController;
 import controller.group.CreateGroupController;
 import controller.group.JoinGroupController;
+import controller.group.MemberListController;
 import controller.group.PreviewGroupController;
+import controller.group.ScheduleListController;
 import controller.group.ViewGroupController;
 import controller.group.ViewMyGroupController;
 import controller.group.ViewMyGroupListController;
@@ -63,6 +65,9 @@ public class RequestMapping {
         mappings.put("/group/create", new ForwardController("/group/createGroup.jsp"));
         mappings.put("/group/create/process", new CreateGroupController());
         
+        // 스터디 일정 조회
+        mappings.put("/group/viewSchedule", new ScheduleListController());
+        
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
         
@@ -83,6 +88,9 @@ public class RequestMapping {
         mappings.put("/assignment/view", new ForwardController("/group/assignment/viewAssignment.jsp"));
         mappings.put("/assignment/create", new ForwardController("/group/assignment/createAssignment.jsp"));
         mappings.put("/assignment/create/form", new CreateAssignmentController());
+        
+        // 그룹 멤버 리스트
+        mappings.put("/group/memberList", new MemberListController());
         
         //퀴즈
         mappings.put("/quiz/main", new ForwardController("/quiz/quizMain.jsp"));
