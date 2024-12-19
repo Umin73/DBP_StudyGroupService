@@ -2,6 +2,7 @@ package model.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import model.domain.Assignment;
 import model.domain.Notice;
@@ -19,15 +20,17 @@ public class GroupServiceDAO {
 
     // 공지사항 작성
     public int createNotice(Notice notice) {
-        String sql = "INSERT INTO Notice (noticeId, title, content, createDate, groupId) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NOTICE VALUES (?, ?, ?, SYSDATE, ?, ?)";
+        String noticeId = UUID.randomUUID().toString();
+        
         Object[] param = new Object[] {
-            notice.getNoticeId(), 
+            noticeId, 
             notice.getTitle(), 
             notice.getContent(), 
-            notice.getCreateDate(), 
+            notice.getCreateDate(),
+            notice.getReply(),
             notice.getGroupId()
         };
-        
         
         try {
             jdbcUtil.setSqlAndParameters(sql, param);
@@ -36,6 +39,7 @@ public class GroupServiceDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+        	jdbcUtil.commit();
             jdbcUtil.close();
         }
         return 0;
@@ -55,6 +59,7 @@ public class GroupServiceDAO {
                         rs.getString("title"),
                         rs.getString("content"),
                         rs.getDate("createdDate"),
+                        rs.getString("reply"),
                         rs.getString("groupId")
                 );
             }
