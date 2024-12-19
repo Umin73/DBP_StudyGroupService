@@ -8,12 +8,32 @@
 <link rel=stylesheet href="${pageContext.request.contextPath}/css/index.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myGroup.css" type="text/css">
     <script>
-        function showCategory(category) {
+        function showCategory(category, groupId = null) {
             const categories = document.querySelectorAll('.category-content');
             categories.forEach((content) => {
                 content.style.display = 'none';
             });
             document.getElementById(category).style.display = 'block';
+            
+            if (category === 'member' && groupId) {
+            	const targetElement = document.getElementById('member'); // 컨텐츠가 표시될 대상 요소
+                const url = `${pageContext.request.contextPath}/group/memberList?groupId=` + groupId;
+
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('멤버 리스트를 불러오는 데 실패했습니다.');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        targetElement.innerHTML = data; // 받은 데이터를 렌더링
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        targetElement.innerHTML = '<p>멤버 정보를 가져오는 중 오류가 발생했습니다.</p>';
+                    });
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -27,6 +47,22 @@
             document.body.appendChild(form);
             form.submit();
         }
+        
+	    function navigateToPage2(targetUri, groupId) {
+	    	const form = document.createElement('form');
+	    	form.action = targetUri;
+	    	form.method = "POST";
+	    	
+	    	const input = document.createElement('input');
+	        input.type = "hidden";
+	        input.name = "groupId";
+	        input.value = groupId;
+	        form.appendChild(input);
+	    	
+	    	document.body.appendChild(form);
+	    	form.submit();
+	    }
+
     </script>
 </head>
 <body>
@@ -37,13 +73,13 @@
         <div class="tabs">
             <button onclick="showCategory('schedule')">스터디 일정</button>
             <button onclick="navigateToPage('<c:url value="/notice/list"/>')">공지사항</button>
-            <button onclick="showCategory('memebr')">멤버</button>
+            <button onclick="navigateToPage2('<c:url value="/group/memberList"/>', '${group.groupId}')">멤버</button>
             <button onclick="navigateToPage('<c:url value="/assignment/list"/>')">과제</button>
             <button onclick="navigateToPage('<c:url value="/quiz/main"/>')">퀴즈</button>
         </div>
         
         <div id="schedule" class="category-content">
-            <h2>스터디 일정</h2>
+            <h2>${group.groupName} 스터디 일정</h2>
             <ul>
                 <c:forEach var="item" items="${scheduleSummary}">
                     <li>${item}</li>
@@ -58,7 +94,7 @@
                 </c:forEach>
             </ul>
         </div>
-        <div id="memebr" class="category-content" style="display: none;">
+        <div id="member" class="category-content" style="display: none;">
             <h2>멤버</h2>
             <jsp:include page="viewMemberList.jsp" />
         </div>

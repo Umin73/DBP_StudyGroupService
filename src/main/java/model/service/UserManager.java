@@ -39,6 +39,14 @@ public class UserManager {
         return user;
     }
     
+    // 그룹 멤버리스트용
+    public User findUserByUserId(String userId) throws SQLException {
+        User user = userDao.findUser(userId);
+        System.out.println("username is " + user.getUsername());
+        
+        return user;
+    }
+    
     public boolean login(String userId, String password) 
             throws SQLException, UserNotFoundException, PasswordMismatchException{
         User user = findUser(userId);

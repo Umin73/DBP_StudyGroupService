@@ -14,8 +14,6 @@ public class ViewMyGroupController implements Controller{
         GroupManager groupMan = GroupManager.getInstance();
         String groupId = request.getParameter("groupId");
         
-        System.out.println("GroupId is " + groupId);
-        
         if(groupId == null || groupId.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "groupId가 제공되지 않았습니다.");
             return null;
@@ -27,6 +25,8 @@ public class ViewMyGroupController implements Controller{
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "해당 그룹을 찾을 수 없습니다.");
             return null;
         }
+        
+        System.out.println("그룹 이름은 " + group.getGroupName());
         
         request.setAttribute("group", group);
         return "/group/myGroup.jsp";
