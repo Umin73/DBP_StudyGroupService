@@ -65,6 +65,12 @@ public class RequestMapping {
         mappings.put("/group/create", new ForwardController("/group/createGroup.jsp"));
         mappings.put("/group/create/process", new CreateGroupController());
         
+        // 그룹 가입
+        mappings.put("/group/join", new JoinGroupController());
+        
+        // 그룹 미리보기
+        mappings.put("/group/preview", new PreviewGroupController());
+        
         // 스터디 일정 조회
         mappings.put("/group/viewSchedule", new ScheduleListController());
         

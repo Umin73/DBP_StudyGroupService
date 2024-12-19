@@ -5,10 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
+import controller.user.UserSessionUtils;
 import model.dao.QuizDAO;
 import model.domain.Quiz;
-import model.domain.User;
-import java.util.UUID;
 
 public class QuizController implements Controller {
 
@@ -16,6 +15,12 @@ public class QuizController implements Controller {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        // 헤더의 로그인/로그아웃 버튼용
+        HttpSession session = request.getSession();
+        boolean isLoggedIn = UserSessionUtils.hasLogined(session);
+        request.setAttribute("isLoggedIn", isLoggedIn);
+        
         // GET 요청: 퀴즈 목록 조회
         if (request.getMethod().equalsIgnoreCase("GET")) {
             request.setAttribute("quizList", quizDAO.findQuizList());
