@@ -32,6 +32,8 @@ function navigateToGroupPage(targetUri, groupId) {
 <jsp:include page="../Header.jsp" />
 <jsp:include page="../sidebar.jsp" />
 
+<div class="main-content">
+
 <div class="container">
 
 <!-- 그룹 리스트 -->
@@ -47,6 +49,7 @@ function navigateToGroupPage(targetUri, groupId) {
 			</div>
         </c:forEach>
     </div>
+</div>
 </div>
 </body>
 </html>

@@ -56,6 +56,9 @@ function checkGroupId(targetUri, groupId) {
 <jsp:include page="../Header.jsp" />
 <jsp:include page="../sidebar.jsp" />
 
+
+<div class="main-content">
+
 <div class="container">
 <!-- 카테고리 탭 -->
 <div class="category-tabs">
@@ -81,6 +84,7 @@ function checkGroupId(targetUri, groupId) {
 			</div>
         </c:forEach>
     </div>
+</div>
 </div>
 </body>
 </html>
