@@ -26,10 +26,19 @@ public class GroupManager {
         if (groupDao.existingGroup(group.getGroupId()) == true) {
             throw new ExistingGroupException(group.getGroupId() + "는 존재하는 그룹 ID입니다.");
         }
+
         return groupDao.create(group, userId);
+    }
+    
+    public StudyGroup findGroup(String groupId) throws SQLException {
+        return groupDao.findGroupById(groupId);
     }
     
     public List<StudyGroup> findAllGroups() throws SQLException {
         return groupDao.findGroupList();
+    }
+    
+    public List<StudyGroup> getUserGroups(String userId) throws SQLException {
+        return groupDao.getUserGroups(userId);
     }
 }

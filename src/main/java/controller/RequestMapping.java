@@ -11,6 +11,8 @@ import controller.group.CreateGroupController;
 import controller.group.JoinGroupController;
 import controller.group.PreviewGroupController;
 import controller.group.ViewGroupController;
+import controller.group.ViewMyGroupController;
+import controller.group.ViewMyGroupListController;
 import controller.quiz.CreateQuizController;
 import controller.quiz.QuizAnswerController;
 import controller.quiz.QuizController;
@@ -64,17 +66,12 @@ public class RequestMapping {
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
         
-        // 그룹 미리보기
-        mappings.put("/group/preview", new PreviewGroupController());  
+        // 사용자가 가입한 그룹 리스트 조회
+        mappings.put("/group/viewMyAllGroup", new ViewMyGroupListController());
         
-        // 그룹 가입하기
-        mappings.put("/group/join", new JoinGroupController());
-        
-        // 그룹 홈
-        mappings.put("/group/home", new ForwardController("/group/groupPage.jsp"));
-        
-        //참여중인그룹 
-        mappings.put("/group/myGroup", new ForwardController("/group/myGroup.jsp"));
+        //그룹 정보 조회
+        mappings.put("/group/showGroup", new ForwardController("/group/showGroup.jsp"));
+        mappings.put("/group/myGroup", new ViewMyGroupController());
      
         //공지사항 관련 
         mappings.put("/notice/list", new ForwardController("/group/notice/viewNoticeList.jsp"));

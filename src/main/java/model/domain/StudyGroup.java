@@ -1,5 +1,6 @@
 package model.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class StudyGroup {
         this.category = category;
     }
 
+    // 그룹 생성 시
     public StudyGroup(String groupName, String groupDescription, String goal, String category,
 			int maxMembers, String leaderId) {
 		super();
@@ -74,6 +76,7 @@ public class StudyGroup {
 		this.setCurrMembers(1);
 		this.maxMembers = maxMembers;
 		this.leaderId = leaderId;
+	    this.members = new ArrayList<GroupMember>();
 	}
     
     public StudyGroup(String groupId, String groupName, String groupDescription, String goal, String category, int currMembers, int maxMembers) {

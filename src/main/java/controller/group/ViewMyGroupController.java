@@ -7,11 +7,10 @@ import controller.Controller;
 import model.domain.StudyGroup;
 import model.service.GroupManager;
 
-public class PreviewGroupController implements Controller {
-    
+public class ViewMyGroupController implements Controller{
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
         GroupManager groupMan = GroupManager.getInstance();
         String groupId = request.getParameter("groupId");
         
@@ -30,9 +29,7 @@ public class PreviewGroupController implements Controller {
         }
         
         request.setAttribute("group", group);
-        
-        
-        return "/group/previewGroup.jsp";
+        return "/group/myGroup.jsp";
     }
 
 }
