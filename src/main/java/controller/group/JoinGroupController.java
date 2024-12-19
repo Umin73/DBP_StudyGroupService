@@ -2,8 +2,10 @@ package controller.group;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.Controller;
+import controller.user.UserSessionUtils;
 import model.dao.StudyGroupDAO;
 
 public class JoinGroupController implements Controller{
@@ -12,6 +14,12 @@ public class JoinGroupController implements Controller{
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        // 헤더의 로그인/로그아웃 버튼용
+        HttpSession session = request.getSession();
+        boolean isLoggedIn = UserSessionUtils.hasLogined(session);
+        request.setAttribute("isLoggedIn", isLoggedIn);
+        
         String groupId = request.getParameter("groupId");
         String userId = (String) request.getSession().getAttribute("userId");
         
@@ -28,7 +36,7 @@ public class JoinGroupController implements Controller{
                 // 성공 시 그룹페이지로 리다이렉트
                 request.setAttribute("success", "그룹에 성공적으로 가입되었습니다.");
                 request.setAttribute("groupId", groupId);
-                return "/group/groupPage.jsp";
+                return "redirect:/home";
             } else if (result.equals("Full")) {
                 // 그룹이 이미 가득 찬 경우
                 request.setAttribute("error", "그룹이 이미 최대 인원에 도달했습니다.");

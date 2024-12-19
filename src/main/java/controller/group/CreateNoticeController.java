@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.Controller;
+import controller.user.UserSessionUtils;
 import model.domain.Notice;
 import model.service.NoticeManager;
 
@@ -16,6 +17,12 @@ public class CreateNoticeController implements Controller{
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        // 헤더의 로그인/로그아웃 버튼용
+        HttpSession session = request.getSession();
+        boolean isLoggedIn = UserSessionUtils.hasLogined(session);
+        request.setAttribute("isLoggedIn", isLoggedIn);
+        
     		 Notice notice = new Notice(
     				 null, request.getParameter("title"),
     				 request.getParameter("content"),

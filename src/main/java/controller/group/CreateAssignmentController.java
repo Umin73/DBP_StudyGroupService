@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.Controller;
+import controller.user.UserSessionUtils;
 import model.domain.Assignment;
 import model.service.AssignmentManager;
 
@@ -21,6 +22,12 @@ public class CreateAssignmentController implements Controller {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        // 헤더의 로그인/로그아웃 버튼용
+        HttpSession session = request.getSession();
+        boolean isLoggedIn = UserSessionUtils.hasLogined(session);
+        request.setAttribute("isLoggedIn", isLoggedIn);
+        
         // 과제 객체 생성: 사용자가 입력한 제목, 설명, 마감일 파라미터로 Assignment 객체 생성
     	Assignment assignment = null;
     	Date dateDeadline = null;
@@ -36,7 +43,6 @@ public class CreateAssignmentController implements Controller {
         	String submit = null;  //임시
         	
         	// 세션에서 groupId 가져오기
-            HttpSession session = request.getSession();
             String groupId = (String) session.getAttribute("groupId");
 
             // groupId가 세션에 없으면 오류 처리

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
+import controller.user.UserSessionUtils;
 import model.domain.Quiz;
 import model.domain.User;
 import model.service.QuizManager;
@@ -16,6 +17,10 @@ public class CreateQuizController implements Controller {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
+        // 헤더의 로그인/로그아웃 버튼용
+        HttpSession session = request.getSession();
+        boolean isLoggedIn = UserSessionUtils.hasLogined(session);
+        request.setAttribute("isLoggedIn", isLoggedIn);
 
         try {
             Random random = new Random();
@@ -30,7 +35,7 @@ public class CreateQuizController implements Controller {
             String groupId = request.getParameter("groupId");
             //String questionId = request.getParameter("questionId");
             
-            HttpSession session = request.getSession();
+            session = request.getSession();
             User loginUser = (User) session.getAttribute("loginUser");
             
             // 그룹아이디 없을때.. 일단 테스트용으로 만듦
