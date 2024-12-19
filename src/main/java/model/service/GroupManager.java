@@ -30,6 +30,10 @@ public class GroupManager {
         return groupDao.create(group, userId);
     }
     
+    public StudyGroup findGroup(String groupId) throws SQLException {
+        return groupDao.findGroupById(groupId);
+    }
+    
     public List<StudyGroup> findAllGroups() throws SQLException {
         return groupDao.findGroupList();
     }
