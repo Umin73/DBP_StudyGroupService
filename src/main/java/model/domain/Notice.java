@@ -7,14 +7,16 @@ public class Notice {
     private String title;
     private String content;
     private Date createDate;
+    private String reply;
     private String groupId;
     
-    public Notice(String noticeId, String title, String content, Date createDate, String groupId) {
+    public Notice(String noticeId, String title, String content, Date createDate, String reply, String groupId) {
         super();
         this.noticeId = noticeId;
         this.title = title;
         this.content = content;
         this.createDate = createDate;
+        this.reply = reply;
         this.groupId = groupId;
     }
 
@@ -50,7 +52,15 @@ public class Notice {
         this.createDate = createDate;
     }
 
-    public String getGroupId() {
+    public String getReply() {
+		return reply;
+	}
+
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+
+	public String getGroupId() {
         return groupId;
     }
 

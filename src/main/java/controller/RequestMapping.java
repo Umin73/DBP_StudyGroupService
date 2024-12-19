@@ -64,24 +64,8 @@ public class RequestMapping {
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
         
-        //그룹 정보 조회
-        mappings.put("/group/showGroup", new ForwardController("/group/showGroup.jsp"));
-        mappings.put("/group/myGroup", new ForwardController("/group/myGroup.jsp"));
-     
-        mappings.put("/notice/list", new ForwardController("/group/notice/viewNoticeList.jsp"));
-        mappings.put("/notice/view", new ForwardController("/group/notice/viewNotice.jsp"));
-        mappings.put("/notice/create", new ForwardController("/group/notice/createNotice.jsp"));
-        
-        mappings.put("/assignment/list", new ForwardController("/group/assignment/viewAssignmentList.jsp"));
-        mappings.put("/assignment/view", new ForwardController("/group/assignment/viewAssignment.jsp"));
-        mappings.put("/assignment/create", new ForwardController("/group/assignment/createAssignment.jsp"));
-        mappings.put("/assignment/create/form", new CreateAssignmentController());
-        
-        //퀴즈
-        mappings.put("/quiz/main", new ForwardController("/quiz/quizMain.jsp"));
-      
         // 그룹 미리보기
-        mappings.put("/group/preview", new PreviewGroupController());        
+        mappings.put("/group/preview", new PreviewGroupController());  
         
         // 그룹 가입하기
         mappings.put("/group/join", new JoinGroupController());
@@ -89,8 +73,22 @@ public class RequestMapping {
         // 그룹 홈
         mappings.put("/group/home", new ForwardController("/group/groupPage.jsp"));
         
-        // 참여중인 그룹 상세페이지
-        mappings.put("/user/myGroup", new ForwardController("/user/myGroup.jsp"));
+        //참여중인그룹 
+        mappings.put("/group/myGroup", new ForwardController("/group/myGroup.jsp"));
+     
+        //공지사항 관련 
+        mappings.put("/notice/list", new ForwardController("/group/notice/viewNoticeList.jsp"));
+        mappings.put("/notice/view", new ForwardController("/group/notice/viewNotice.jsp"));
+        mappings.put("/notice/create", new ForwardController("/group/notice/createNotice.jsp"));
+        
+        //과제 관련
+        mappings.put("/assignment/list", new ForwardController("/group/assignment/viewAssignmentList.jsp"));
+        mappings.put("/assignment/view", new ForwardController("/group/assignment/viewAssignment.jsp"));
+        mappings.put("/assignment/create", new ForwardController("/group/assignment/createAssignment.jsp"));
+        mappings.put("/assignment/create/form", new CreateAssignmentController());
+        
+        //퀴즈
+        mappings.put("/quiz/main", new ForwardController("/quiz/quizMain.jsp"));
         
         // 퀴즈 리스트 조회
         mappings.put("/quiz/list", new QuizController());

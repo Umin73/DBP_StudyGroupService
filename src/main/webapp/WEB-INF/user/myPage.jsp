@@ -43,7 +43,7 @@ if (userGroups == null) {
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/index.css" type="text/css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/mygroup.css"
+	href="${pageContext.request.contextPath}/css/myGroup.css"
 	type="text/css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/myPage.css"
@@ -109,7 +109,7 @@ if (userGroups == null) {
 					for (StudyGroup group : userGroups) {
 				%>
 				<div class="group-item"
-					onclick="location.href='${pageContext.request.contextPath}/user/myGroup'">
+					onclick="location.href='${pageContext.request.contextPath}/group/myGroup'">
 					<!-- 그룹 이미지 -->
 					<div class="group-img">
 						<img

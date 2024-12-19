@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Group</title>
 <link rel=stylesheet href="${pageContext.request.contextPath}/css/index.css" type="text/css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myGroup.css" type="text/css">
+<link rel=stylesheet href="${pageContext.request.contextPath}/css/myGroup.css" type="text/css">
     <script>
         function showCategory(category) {
             const categories = document.querySelectorAll('.category-content');
