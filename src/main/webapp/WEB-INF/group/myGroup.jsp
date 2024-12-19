@@ -60,11 +60,7 @@
         </div>
         <div id="memebr" class="category-content" style="display: none;">
             <h2>멤버</h2>
-            <ul>
-                <c:forEach var="item" items="${memberSummary}">
-                    <li>${item}</li>
-                </c:forEach>
-            </ul>
+            <jsp:include page="viewMemberList.jsp" />
         </div>
         <div id="assignment" class="category-content" style="display: none;">
             <h2>과제</h2>

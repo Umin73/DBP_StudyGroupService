@@ -11,6 +11,7 @@ import controller.group.CreateGroupController;
 import controller.group.JoinGroupController;
 import controller.group.PreviewGroupController;
 import controller.group.ViewGroupController;
+import controller.group.ViewMyGroupListController;
 import controller.quiz.CreateQuizController;
 import controller.quiz.QuizAnswerController;
 import controller.quiz.QuizController;
@@ -63,6 +64,9 @@ public class RequestMapping {
         
         // 그룹 리스트 조회
         mappings.put("/group/viewAll", new ViewGroupController());
+        
+        // 사용자가 가입한 그룹 리스트 조회
+        mappings.put("/group/viewMyAllGroup", new ViewMyGroupListController());
         
         //그룹 정보 조회
         mappings.put("/group/showGroup", new ForwardController("/group/showGroup.jsp"));
