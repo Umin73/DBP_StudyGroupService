@@ -33,4 +33,8 @@ public class GroupManager {
     public List<StudyGroup> findAllGroups() throws SQLException {
         return groupDao.findGroupList();
     }
+    
+    public List<StudyGroup> getUserGroups(String userId) throws SQLException {
+        return groupDao.getUserGroups(userId);
+    }
 }

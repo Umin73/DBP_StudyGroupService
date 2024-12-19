@@ -252,4 +252,52 @@ public class StudyGroupDAO {
         return false;
     }
     
+    // 사용자가 가입한 그룹들 조회
+    public List<StudyGroup> getUserGroups(String userId) throws SQLException {
+        String sql = "SELECT SG.group_id, SG.groupname, SG.groupdescription, SG.goal, SG.category, " +
+                "SG.currmember, SG.maxmember, SG.leader, " +
+                "GM.role, GM.attendance_rate, GM.quiz_rate, GM.assign_rate " +
+                "FROM STUDYGROUP SG " +
+                "JOIN GROUPMEMBER GM ON SG.group_id = GM.group_id " +
+                "WHERE TRIM(GM.user_id) = ?";
+        
+        System.out.println("userId" + userId);
+        jdbcUtil.setSqlAndParameters(sql, new Object[]{userId});
+        
+        List<StudyGroup> groupList = new ArrayList<>();
+        
+        try {
+            ResultSet rs = jdbcUtil.executeQuery();
+            System.out.println("~~~~");
+            while (rs.next()) {
+                // StudyGroup 객체 생성
+                System.out.println("Generate StudyGroup Obj");
+                StudyGroup group = new StudyGroup();
+                group.setGroupId(rs.getString("GROUP_ID"));
+                group.setGroupName(rs.getString("GROUPNAME"));
+                group.setGroupDescription(rs.getString("GROUPDESCRIPTION"));
+                group.setGoal(rs.getString("GOAL"));
+                group.setCategory(rs.getString("CATEGORY"));
+                group.setCurrMembers(rs.getInt("CURRMEMBER"));
+                group.setMaxMembers(rs.getInt("MAXMEMBER"));
+                group.setLeaderId(rs.getString("LEADER"));
+                
+                /*
+                 * // GroupMember 객체 생성 GroupMember member = new GroupMember(
+                 * rs.getString("GROUP_ID"), null, rs.getString("ROLE"),
+                 * rs.getDouble("ATTENDANCE_RATE"), rs.getDouble("QUIZ_RATE"),
+                 * rs.getDouble("ASSIGN_RATE"));
+                 * 
+                 * // 그룹에 멤버 추가 List<GroupMember> members = new ArrayList<>();
+                 * members.add(member); group.setMembers(members);
+                 */
+                
+                groupList.add(group);
+            }
+            return groupList;
+        } finally {
+            jdbcUtil.close();
+        }
+    }
+    
 }
