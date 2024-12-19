@@ -11,6 +11,7 @@ import controller.group.CreateGroupController;
 import controller.group.JoinGroupController;
 import controller.group.PreviewGroupController;
 import controller.group.ViewGroupController;
+import controller.group.ViewMyGroupController;
 import controller.group.ViewMyGroupListController;
 import controller.quiz.CreateQuizController;
 import controller.quiz.QuizAnswerController;
@@ -70,7 +71,7 @@ public class RequestMapping {
         
         //그룹 정보 조회
         mappings.put("/group/showGroup", new ForwardController("/group/showGroup.jsp"));
-        mappings.put("/group/myGroup", new ForwardController("/group/myGroup.jsp"));
+        mappings.put("/group/myGroup", new ViewMyGroupController());
      
         mappings.put("/notice/list", new ForwardController("/group/notice/viewNoticeList.jsp"));
         mappings.put("/notice/view", new ForwardController("/group/notice/viewNotice.jsp"));

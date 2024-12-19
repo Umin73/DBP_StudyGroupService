@@ -9,8 +9,21 @@
 
 <script>
 
-function navigateToPage() {
-	
+function navigateToGroupPage(targetUri, groupId) {
+    console.log(groupId);
+    
+    const form = document.createElement('form');
+    form.action = targetUri;
+    form.method = "POST";
+    
+    const input = document.createElement('input');
+    input.type = "hidden";
+    input.name = "groupId";
+    input.value = groupId;
+    form.appendChild(input);
+    
+    document.body.appendChild(form);
+    form.submit();
 }
 
 </script>
@@ -28,7 +41,7 @@ function navigateToPage() {
         <c:forEach var="group" items="${myGroupList}">
             <div class="group-card" 
 			     data-category="${group.category}"
-			     >
+			     onclick="navigateToGroupPage('<c:url value="/group/myGroup"/>', '${group.groupId}')">
 			    <div class="group-category">${group.category}</div>
 			    <div class="group-name">${group.groupName}</div>
 			    <div class="group-description">${group.groupDescription}</div>
