@@ -24,6 +24,8 @@ public class MemberListController implements Controller {
         GroupManager groupMan = GroupManager.getInstance();
         String groupId = request.getParameter("groupId");
         
+        request.setAttribute("groupId", groupId);
+        
         if(groupId == null || groupId.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "groupId가 제공되지 않았습니다.");
             return null;

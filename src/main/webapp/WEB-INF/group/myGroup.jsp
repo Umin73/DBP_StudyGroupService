@@ -14,26 +14,6 @@
                 content.style.display = 'none';
             });
             document.getElementById(category).style.display = 'block';
-            
-            if (category === 'member' && groupId) {
-            	const targetElement = document.getElementById('member'); // 컨텐츠가 표시될 대상 요소
-                const url = `${pageContext.request.contextPath}/group/memberList?groupId=` + groupId;
-
-                fetch(url)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('멤버 리스트를 불러오는 데 실패했습니다.');
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        targetElement.innerHTML = data; // 받은 데이터를 렌더링
-                    })
-                    .catch(error => {
-                        console.error(error);
-                        targetElement.innerHTML = '<p>멤버 정보를 가져오는 중 오류가 발생했습니다.</p>';
-                    });
-            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {

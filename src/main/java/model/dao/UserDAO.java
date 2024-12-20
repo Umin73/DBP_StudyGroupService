@@ -78,11 +78,11 @@ public class UserDAO {
         return 0;
     }
     
-    public User findUser(String userId) throws SQLException {
-        String sql = "SELECT password, username, email, phone FROM USERS WHERE TRIM(user_id) = ?";
+    public User findUser(String userId, boolean close) throws SQLException {
+        String sql = "SELECT password, username, email, phone FROM USERS WHERE TRIM(USER_ID) = ?";
         System.out.println("Executing SQL: " + sql + " with userId=[" + userId.trim() + "]");
         
-        jdbcUtil.setSqlAndParameters(sql, new Object[]{userId});
+        jdbcUtil.setSqlAndParameters(sql, new Object[]{userId.trim()});
 
         try {
             ResultSet rs = jdbcUtil.executeQuery();
@@ -98,7 +98,8 @@ public class UserDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            jdbcUtil.close();
+            if(close)
+                jdbcUtil.close();
         }
         System.out.println("User not found: " + userId);
         return null;

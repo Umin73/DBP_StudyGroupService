@@ -30,7 +30,7 @@ public class UserManager {
     }
     
     public User findUser(String userId) throws SQLException, UserNotFoundException{
-        User user = userDao.findUser(userId);
+        User user = userDao.findUser(userId, true);
         
         if(user == null) {
             throw new UserNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
@@ -41,8 +41,8 @@ public class UserManager {
     
     // 그룹 멤버리스트용
     public User findUserByUserId(String userId) throws SQLException {
-        User user = userDao.findUser(userId);
-        System.out.println("username is " + user.getUsername());
+        User user = userDao.findUser(userId, false);
+        System.out.println("[UserManager] username is " + user.getUsername());
         
         return user;
     }
