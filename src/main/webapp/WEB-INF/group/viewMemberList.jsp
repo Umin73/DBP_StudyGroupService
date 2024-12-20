@@ -90,7 +90,6 @@
 				                <th>출석률</th>
 				                <th>퀴즈 제출률</th>
 				                <th>과제 제출률</th>
-				                <th>관리</th>
 				            </tr>
 				        </thead>
 				        <tbody>
@@ -101,12 +100,6 @@
 				                    <td>${member.attendanceRate}%</td>
 				                    <td>${member.quizRate}%</td>
 				                    <td>${member.assignRate }%</td>
-				                    <td>
-				                        <c:if test="${member.role != 'leader'}">
-				                            <button class="btn btn-leader">리더 변경</button>
-				                            <button class="btn btn-kick">추방</button>
-				                        </c:if>
-				                    </td>
 				                </tr>
 				            </c:forEach>
 				        </tbody>
