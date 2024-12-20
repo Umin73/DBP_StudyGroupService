@@ -36,6 +36,12 @@ function navigateToGroupPage(targetUri, groupId) {
 
 <div class="container">
 
+	<c:if test="${not empty success}">
+      	<script>
+        	alert("${success}");
+    	</script>
+    </c:if>
+
 <!-- 그룹 리스트 -->
     <div class="group-container">
         <c:forEach var="group" items="${myGroupList}">

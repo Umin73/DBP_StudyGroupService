@@ -24,7 +24,7 @@ public class JoinGroupController implements Controller{
         String userId = (String) request.getSession().getAttribute("userId");
         
         if (userId == null) {
-            request.setAttribute("error", "로그인이 필요합니다.");
+            request.setAttribute("errorMessage", "로그인이 필요합니다.");
             return "/user/loginForm.jsp";
         }
         
@@ -36,13 +36,17 @@ public class JoinGroupController implements Controller{
                 // 성공 시 그룹페이지로 리다이렉트
                 request.setAttribute("success", "그룹에 성공적으로 가입되었습니다.");
                 request.setAttribute("groupId", groupId);
-                return "redirect:/home";
+                return "/group/viewMyAllGroup.jsp";
+//                return "redirect:/home";
+            } else if(result.equals("Duplicated")) {
+                request.setAttribute("errorMessage", "이미 가입된 그룹입니다.");
+                return "/group/previewGroup.jsp";
             } else if (result.equals("Full")) {
                 // 그룹이 이미 가득 찬 경우
-                request.setAttribute("error", "그룹이 이미 최대 인원에 도달했습니다.");
-                return "/group/previewGroup.jsp"; // 그룹 상세 페이지로 이동
+                request.setAttribute("errorMessage", "그룹이 이미 최대 인원에 도달했습니다.");
+                return "/group/previewGroup.jsp";
             } else {
-                request.setAttribute("error", "그룹 가입에 실패했습니다.");
+                request.setAttribute("errorMessage", "그룹 가입에 실패했습니다.");
                 return "/group/previewGroup.jsp";
             }
 

@@ -36,11 +36,20 @@
 <link rel=stylesheet href="${pageContext.request.contextPath}/css/index.css" type="text/css">
 <link rel=stylesheet href="${pageContext.request.contextPath}/css/login.css" type="text/css">
 <title>로그인</title>
+<script>
+</script>
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
 	<jsp:include page="../sidebar.jsp" />
 	<div class="main-content">
+	
+		<c:if test="${not empty errorMessage}">
+            <script>
+                alert("${errorMessage}");
+            </script>
+        </c:if>
+	
 		<div class="login-titleWrap">로그인</div>
         <div class="contentWrap">
         	<form method="POST" action="<c:url value='/user/login' />">
