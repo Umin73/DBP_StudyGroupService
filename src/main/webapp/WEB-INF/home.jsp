@@ -32,6 +32,12 @@ function navigateToGroupPage(targetUri, groupId) {
 	<jsp:include page="sidebar.jsp" />
 	<div class="main-content">
 
+	<c:if test="${not empty success}">
+      	<script>
+        	alert("${success}");
+    	</script>
+    </c:if>
+
 		<!-- 광고 -->
     	<section class="main-ad">
     		<img src="img/dbp_mainpage_ad1.png" class="ad-img">

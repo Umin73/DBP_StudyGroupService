@@ -48,6 +48,14 @@
 <body>
 	<jsp:include page="../Header.jsp" />
 	<jsp:include page="../sidebar.jsp" />
+	
+	<c:if test="${not empty success}">
+      	<script>
+        	alert("${success}");
+    	</script>
+    </c:if>
+	
+	
     <div class="container">
         <!-- 상단 카테고리 탭 -->
         <div class="tabs">

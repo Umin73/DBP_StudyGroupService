@@ -30,7 +30,7 @@
                 
                 <div class="buttonContainer">
 	                <div>
-	        			<input type="button" class="sloginButton" value="비밀번호 찾기" onClick="navigateToPage('<c:url value='/user/findId' />')" />
+	        			<input type="button" class="sloginButton" value="비밀번호 찾기" onClick="navigateToPage('<c:url value='/user/findPw' />')" />
 	        		</div>
 	        		
 	        		<div>

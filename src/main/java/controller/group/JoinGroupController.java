@@ -34,10 +34,7 @@ public class JoinGroupController implements Controller{
             
             if (result.equals("Joined")) {
                 // 성공 시 그룹페이지로 리다이렉트
-                request.setAttribute("success", "그룹에 성공적으로 가입되었습니다.");
-                request.setAttribute("groupId", groupId);
-                return "/group/viewMyAllGroup.jsp";
-//                return "redirect:/home";
+                return "redirect:/home";
             } else if(result.equals("Duplicated")) {
                 request.setAttribute("errorMessage", "이미 가입된 그룹입니다.");
                 return "/group/previewGroup.jsp";
