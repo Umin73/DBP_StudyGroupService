@@ -59,6 +59,12 @@ function checkGroupId(targetUri, groupId) {
 
 <div class="main-content">
 
+	<c:if test="${not empty errorMessage}">
+      	<script>
+        	alert("${errorMessage}");
+    	</script>
+    </c:if>
+
 <div class="container">
 <!-- 카테고리 탭 -->
 <div class="category-tabs">

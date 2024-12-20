@@ -184,7 +184,7 @@ public class StudyGroupDAO {
         try {
             ResultSet rs = jdbcUtil.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
-                return "User is already a member of this group.";
+                return "Duplicated";
             }
 
             // 그룹 인원 확인
@@ -197,7 +197,7 @@ public class StudyGroupDAO {
                 int maxMembers = rs.getInt("MAXMEMBER");
 
                 if (currMembers >= maxMembers) {
-                    return "Group is full.";
+                    return "Full";
                 }
             } else {
                 return "Group not found.";
