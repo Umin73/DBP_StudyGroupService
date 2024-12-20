@@ -1,7 +1,7 @@
 package model.domain;
 
-import model.dao.UserDAO;
-import model.domain.User;
+import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
+
+import model.dao.UserDAO;
 
 @WebServlet("/updateProfile")
 public class UpdateProfileServlet extends HttpServlet {
@@ -47,7 +47,7 @@ public class UpdateProfileServlet extends HttpServlet {
 
         UserDAO userDAO = new UserDAO();
         try {
-            User existingUser = userDAO.findUser(userId);
+            User existingUser = userDAO.findUser(userId, true);
             if (existingUser == null) {
                 response.getWriter().write("사용자를 찾을 수 없습니다.");
                 return;
