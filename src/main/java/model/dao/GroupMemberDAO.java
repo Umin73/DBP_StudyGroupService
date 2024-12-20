@@ -32,7 +32,9 @@ public class GroupMemberDAO {
             while (rs.next()) {
                 
                 String userId = rs.getString("USER_ID");
+                System.out.println("[GroupMemberDAO] userId is " + userId);
                 User user = userMan.findUserByUserId(userId);
+                System.out.println("[GroupMemberDAO] username is " + user.getUsername());
                 
                 GroupMember member = new GroupMember();
                 member.setGroupId(rs.getString("GROUP_ID"));
