@@ -17,9 +17,9 @@ public class UserDAO {
 
 
     public int createUser(User user) throws SQLException {
-        String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO USERS (USER_ID, PASSWORD, USERNAME, EMAIL, PHONE) VALUES (?, ?, ?, ?, ?)";
         Object[] param = new Object[]{
-            user.getUserId(), 
+            user.getUserId(),
             user.getPassword(), 
             user.getUsername(), 
             user.getEmail(), 
