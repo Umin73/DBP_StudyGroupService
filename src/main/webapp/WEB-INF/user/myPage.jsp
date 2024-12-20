@@ -18,13 +18,13 @@ if (userId == null) {
 
 // 사용자 정보 가져오기
 UserDAO userDAO = new UserDAO();
-User user = userDAO.findUser(userId);
+User user = userDAO.findUser(userId, true);
 
 // 그룹 리스트 가져오기 (StudyGroupDAO 사용)
 StudyGroupDAO groupDAO = new StudyGroupDAO();
 List<StudyGroup> userGroups = null;
 try {
-	userGroups = groupDAO.findUser(userId); // 수정된 부분
+	userGroups = groupDAO.getUserGroups(userId); // 수정된 부분
 } catch (Exception e) {
 	e.printStackTrace();
 }
